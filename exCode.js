@@ -8,7 +8,8 @@ class TitleScene extends Phaser.Scene {
 
     preload ()
     {
-        this.load.image('face', 'assets/pics/bw-face.png');
+        this.load.image('face', './assets/smileyFace.png');
+        this.load.image('icon', './assets/mario.png');
     }
 
     create ()
@@ -19,16 +20,30 @@ class TitleScene extends Phaser.Scene {
 
         var createFig = this.add.text(250, 400, 'click to create your character', { font: '16px Courier', fill: '#0f0' });
         createFig.setInteractive({ useHandCursor: true });
-        // this.face = this.add.image(400, 300, 'face');
-        createFig.on('pointerdown', () => this.clickButton2());
+        var face = this.add.image(210, 300, 'face');
+        face.setScale(0.1);
+        face.setInteractive();
+        face.on('pointerup', this.clickButton, this);
 
-        this.input.manager.enabled = true;
+        var icon = this.add.image(210, 400, 'icon');
+        icon.setScale(0.1);
+        icon.setInteractive();
+        icon.on('pointerup', this.clickButton2, this);
 
-        this.input.once('pointerdown', function () {
+        //createFig.on('pointerdown', () => this.clickButton2());
 
-            this.scene.start('sceneB');
+        //this.input.manager.enabled = true;
 
-        }, this);
+        // var btn = this.add.image(175, 300, 'restart');
+        // btn.setInteractive();
+        // btn.setOrigin(0);
+        // btn.on('pointerup', this.startGame, this);
+
+        // this.input.once('pointerdown', function () {
+
+        //     this.scene.start('sceneB');
+
+        // }, this);
 
         
     }
@@ -63,14 +78,16 @@ class SceneB extends Phaser.Scene {
 
     preload ()
     {
-        this.load.image('arrow', 'assets/sprites/longarrow.png');
+        this.load.image('arrow', 'assets/arrow.png');
     }
 
     create ()
     {
+        // "#4488AA";
         this.arrow = this.add.sprite(400, 300, 'arrow').setOrigin(0, 0.5);
+        this.arrow.setScale(.5);
 
-        this.input.once('pointerdown', function (event) {
+        this.input.once('pointerdown', function () {
 
             this.scene.start('sceneC');
 
@@ -94,14 +111,14 @@ class SceneC extends Phaser.Scene {
 
     preload ()
     {
-        this.load.image('character', 'mario.png');
+        this.load.image('character', './assets/mario.png');
     }
 
 
     create ()
     {
-        game.stage.backgroundColor = "#4488AA";
-        var cursors = this.input.keyboard.createCursorKeys();
+        //game.stage.backgroundColor = "#4488AA";
+        cursors = this.input.keyboard.createCursorKeys();
 
         var player = this.physics.add.image(400, 300, 'character');
 
@@ -109,7 +126,7 @@ class SceneC extends Phaser.Scene {
 
         this.input.once('pointerdown', function (event) {
 
-            this.scene.start('sceneA');
+            this.scene.start('TitleScene');
 
         }, this);
     }
@@ -151,12 +168,14 @@ class Character extends Phaser.Scene
     preload ()
     {
         this.load.image('character', 'mario.png');
+        this.load.image('background', 'Beachbg.png')
     }
 
 
     create ()
     {
-        game.stage.backgroundColor = "#4488AA";
+
+        this.add.image(0, 0, 'background').setOrigin(0);
         var cursors = this.input.keyboard.createCursorKeys();
 
         var player = this.physics.add.image(400, 300, 'character');
@@ -183,8 +202,12 @@ var config = {
     height: 600,
     backgroundColor: '#000000',
     //parent: 'phaser-example',
+    pixelArt: true,
     scene: [ TitleScene, SceneB, SceneC, Character ]
 };
 
 var game = new Phaser.Game(config);
+var cursors;
+
+game.scene.start(TitleScene);
 
