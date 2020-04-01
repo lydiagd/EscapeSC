@@ -1,34 +1,85 @@
 ﻿//import {TitleScene} from './TitleScene.js';
+class OpeningScreen extends Phaser.Scene {
+    constructor ()
+    {
+        super({key: 'OpeningScreen'});
+    }
+
+    preload ()
+    {
+
+    }
+
+    create()
+    {
+        var text = this.add.text(200, 100, 'WELCOME TO THE PERSONALITY CHALLENGE', { font: '18px Courier', fill: 'rgb(68, 136, 170)'})
+
+        var n1 = this.add.text(180, 250, 'Want to see if you are eligible for greater things beyond?', { font: '12px Courier', fill: '#0f0' })
+        var n2 = this.add.text(180, 265, 'Take our professional diagnostics test to discover your personality traits', { font: '12px Courier', fill: '#0f0' })  
+        var n3 = this.add.text(180, 280, 'and see what strengths and weaknesses you possess.', {font: '12px Courier', fill: '#0f0'} )
+
+        var text = this.add.text(250, 345, 'click to begin game', { font: '16px Courier', fill: '#0f0' });
+        text.setInteractive({ useHandCursor: true })
+        text.on('pointerup', this.clickButton, this);
+    }
+    clickButton()
+    {
+        this.scene.start('TitleScene');
+    }
+}
+
+
 class TitleScene extends Phaser.Scene {
+
+    // init(data)
+    // {
+    //     createdCharacter = data.createdChar;
+    //     player = data.playerNew;
+
+    // }
 
     constructor ()
     {
         super({ key: 'TitleScene' });
+        // var player;
+        // var createdCharacter;
     }
 
     preload ()
     {
         this.load.image('face', './assets/smileyFace.png');
         this.load.image('icon', './assets/mario.png');
+        this.load.image('pig', './assets/pig.png');
     }
 
     create ()
     {
-         var text = this.add.text(250, 300, 'click to begin game', { font: '16px Courier', fill: '#0f0' });
-         text.setInteractive({ useHandCursor: true }).on('pointerover', () => this.enterButtonHoverState() )
-         .on('pointerout', () => this.enterButtonRestState() ).on('pointerdown', () => this.clickButton2());
+        var createdCharacter = true;
+
+        var text = this.add.text(250, 300, 'click to begin game', { font: '16px Courier', fill: '#0f0' });
+            // text.setInteractive({ useHandCursor: true }).on('pointerover', () => this.enterButtonHoverState() )
+            // .on('pointerout', () => this.enterButtonRestState() ).on('pointerdown', () => this.clickButton2());
 
         var createFig = this.add.text(250, 400, 'click to create your character', { font: '16px Courier', fill: '#0f0' });
-        createFig.setInteractive({ useHandCursor: true });
-        var face = this.add.image(210, 300, 'face');
-        face.setScale(0.1);
-        face.setInteractive();
-        face.on('pointerup', this.clickButton, this);
+        //createFig.setInteractive({ useHandCursor: true });
+        var face = this.add.image(210, 300, 'pig');
+        face.setScale(0.04);
+        face.setInteractive({useHandCursor: true});
+        if(createdCharacter == true)
+        {
+            face.on('pointerup', this.clickButton, this);
+        }
+        else{
+            face.on('pointerup', this.enterButtonHoverState, this);
+        }
 
         var icon = this.add.image(210, 400, 'icon');
         icon.setScale(0.1);
-        icon.setInteractive();
+        icon.setInteractive({useHandCursor: true});
         icon.on('pointerup', this.clickButton2, this);
+
+        // var pig = this.add.image(250, 100, 'pig');
+        // pig.setScale(.03);
 
         //createFig.on('pointerdown', () => this.clickButton2());
 
@@ -59,7 +110,13 @@ class TitleScene extends Phaser.Scene {
     }
     
     enterButtonHoverState() {
+
         this.clickButton.setStyle({ fill: '#ff0'});
+
+        if(createdCharacter == false)
+        {
+            var popup = this.add.text(265, 275, 'Sorry, please create a character before playing the game');
+        }
     }
 
     enterButtonRestState() {
@@ -111,47 +168,61 @@ class SceneC extends Phaser.Scene {
 
     preload ()
     {
-        this.load.image('character', './assets/mario.png');
+        this.load.spritesheet('character', 
+        'assets/mario.png',
+        { frameWidth: 32, frameHeight: 48 });
+        this.load.image('ground', './assets/ground.png');
+        this.load.image('sky', './assets/sky.png');
     }
 
 
     create ()
     {
         //game.stage.backgroundColor = "#4488AA";
+
+        this.add.image(400, 300, 'sky');
+
+        var platforms = this.physics.add.staticGroup();
+
+        platforms.create(400, 568, 'ground').setScale(0.2).refreshBody();
+
+
         cursors = this.input.keyboard.createCursorKeys();
 
-        var player = this.physics.add.image(400, 300, 'character');
+        this.player = this.physics.add.sprite(100, 450, 'character');
 
-        player.setCollideWorldBounds(true);
-
-        this.input.once('pointerdown', function (event) {
-
-            this.scene.start('TitleScene');
-
-        }, this);
+        // player.setBounce(0.2);
+        this.player.setCollideWorldBounds(true).setBounce(.2);
+        this.physics.add.collider(player, platforms);
+        
     }
 
     update ()
     {
-        player.setVelocity(0);
-
         if (cursors.left.isDown)
         {
-            player.setVelocityX(-300);
+           player.setVelocityX(-160);
+
+            //player.anims.play('left', true);
         }
         else if (cursors.right.isDown)
         {
-            player.setVelocityX(300);
+            player.setVelocityX(160);
+
+            //player.anims.play('right', true);
+        }
+        else
+        {
+            player.setVelocityX(0);
+
+            //player.anims.play('turn');
         }
 
-        if (cursors.up.isDown)
+        if (cursors.up.isDown && player.body.touching.down)
         {
-            player.setVelocityY(-300);
+            player.setVelocityY(-330);
         }
-        else if (cursors.down.isDown)
-        {
-            player.setVelocityY(300);
-        }
+        
     }
 
 }
@@ -159,6 +230,10 @@ class SceneC extends Phaser.Scene {
 
 class Character extends Phaser.Scene
 {
+    init()
+    {
+        //var createdCharacter = true;
+    }
     constructor ()
     {
         super({ key: 'character' });
@@ -167,30 +242,44 @@ class Character extends Phaser.Scene
 
     preload ()
     {
-        this.load.image('character', 'mario.png');
-        this.load.image('background', 'Beachbg.png')
+        this.load.image('character', './assets/mario.png');
+        this.load.image('background', './assets/whiteRectangle.png')
     }
 
 
     create ()
     {
+        var player;
 
-        this.add.image(0, 0, 'background').setOrigin(0);
-        var cursors = this.input.keyboard.createCursorKeys();
+        var bg1 = this.add.image(100, 90, 'background');
+        bg1.setScale(0.8);
+        var p1 = this.add.image(90,90, 'character');
+        p1.setScale(0.25);
+        p1.setInteractive({ useHandCursor: true });
+        p1.on('pointerup', this.setPlayer, this);
 
-        var player = this.physics.add.image(400, 300, 'character');
-
-        var text = this.add.text(250, 400, 'click to return back to menu screen', { font: '16px Courier', fill: '#0f0' });
+        var text = this.add.text(250, 400, 'click to return back to menu screen', { font: '16px Courier', fill: '#ffffff' });
         text.setInteractive({ useHandCursor: true });
-        // this.face = this.add.image(400, 300, 'face');
+        text.setInteractive();
+        text.on('pointerup', this.clickButton, this);
 
         this.input.manager.enabled = true;
 
-        this.input.once('pointerdown', function (event) {
+        // this.input.once('pointerdown', function () {
 
-            this.scene.start('TitleScene');
+        //     this.scene.start('TitleScene');
 
-        }, this);
+        // }, this);
+    }
+
+    clickButton()
+    {
+        this.scene.start('TitleScene');
+        //, {createdChar: true, player: player});
+    }
+    setPlayer()
+    {
+        player = this.add.image('character');
     }
 
 }
@@ -203,11 +292,18 @@ var config = {
     backgroundColor: '#000000',
     //parent: 'phaser-example',
     pixelArt: true,
-    scene: [ TitleScene, SceneB, SceneC, Character ]
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 300 }, // will affect our player sprite
+            debug: false // change if you need
+        }
+    },
+    scene: [ OpeningScreen, TitleScene, SceneB, SceneC, Character ]
 };
 
 var game = new Phaser.Game(config);
 var cursors;
 
-game.scene.start(TitleScene);
+game.scene.start(OpeningScreen);
 
