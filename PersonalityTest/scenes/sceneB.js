@@ -108,6 +108,9 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
     onTimeEvent ()
     {
         this.initialTime -= 1 // One second
+        if (this.initialTime < 0){
+            return
+        }
         this.timeText.setText('Countdown: ' + this.initialTime)
     }
 }
