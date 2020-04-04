@@ -7,7 +7,8 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         super({ key: 'sceneB' })
         this.player
         this.cursors
-        this.text
+        this.timeText
+        this.initialTime
     }
 
     init(data)
@@ -56,19 +57,14 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         this.arrow = this.add.sprite(400, 300, 'arrow').setOrigin(0, 0.5)
         this.arrow.setScale(.5)
 
-
         this.initialTime = 30
-
-        this.text = this.add.text(300, 16, 'Countdown: '+ this.initialTime, { font: '22px Arial', fill: '#ffffff' })
+        this.timeText = this.add.text(300, 16, 'Countdown: '+ this.initialTime, { font: '22px Arial', fill: '#ffffff' })
         // + formatTime(this.initialTime)
 
         // Each 1000 ms call onEvent
-        //timedEvent = this.time.addEvent({ delay: 1000, callback: onTimeEvent, callbackScope: this, loop: true })
-
+        this.time.addEvent({ delay: 1000, callback: this.onTimeEvent, callbackScope: this, loop: true })
         this.input.once('pointerdown', function () {
-
             this.scene.start('sceneC')
-
         }, this)
     }
 
@@ -109,10 +105,10 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
     //     return `${minutes}:${partInSeconds}`
     // }
     
-    ontimeEvent ()
+    onTimeEvent ()
     {
         this.initialTime -= 1 // One second
-        this.text.setText('Countdown: ' + this.initialTime)
+        this.timeText.setText('Countdown: ' + this.initialTime)
     }
 }
 export default SceneB
