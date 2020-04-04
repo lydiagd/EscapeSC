@@ -40,7 +40,6 @@ class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
     constructor() {
         super({ key: 'TitleScene' })
         this.player
-        // var createdCharacter
     }
 
     preload() {
@@ -58,7 +57,7 @@ class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
             text.alpha = 0.4
             face.alpha = 0.4
         }
-        
+
         var createFig = this.add.text(250, 400, 'click to create your character', { font: '16px Courier', fill: '#0f0' })
         //createFig.setInteractive({ useHandCursor: true })
         if (this.player != null) {
@@ -83,9 +82,9 @@ class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
     }
 
     enterButtonHoverState() {
-        this.clickButton.setStyle({ fill: '#ff0' })
-        if (createdCharacter == false) {
-            var popup = this.add.text(265, 275, 'Sorry, please create a character before playing the game')
+        // this.clickButton.setStyle({ fill: '#ff0' })
+        if (this.player == null) {
+            var popup = this.add.text(140, 200, 'Sorry, please create a character before playing the game')
         }
     }
 
@@ -96,9 +95,7 @@ class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
 
 class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
     
-    init() {
-        //var createdCharacter = true
-    }
+    init() {}
 
     constructor() {
         super({ key: 'character' })
