@@ -217,8 +217,8 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
 
 }
 
-import SceneB from './sceneB.js'
-import SceneC from './sceneC.js'
+import SceneB from './scenes/sceneB.js'
+import SceneC from './scenes/sceneC.js'
 
 var config = {
     type: Phaser.AUTO,
