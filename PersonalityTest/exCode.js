@@ -109,7 +109,7 @@ class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
 
 
 class SceneB extends Phaser.Scene { /******** GAME #2 ********/
-
+    
     constructor ()
     {
         super({ key: 'sceneB' });
@@ -122,6 +122,7 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         this.load.image('boxObj', './assets/boxBlock.png');
         // this.load.tilemap('tmap', './assets/gameMap.csv', null, Phaser.Tilemap.CSV);
         // this.load.image('tiles', './assets/tiles.png');
+        var timedEvent;
     }
 
     create ()
@@ -165,7 +166,7 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         // + formatTime(this.initialTime)
 
         // Each 1000 ms call onEvent
-        var timedEvent = this.time.addEvent({ delay: 1000, callback: onTimeEvent, callbackScope: this, loop: true });
+        //timedEvent = this.time.addEvent({ delay: 1000, callback: onTimeEvent, callbackScope: this, loop: true });
 
 
         this.input.once('pointerdown', function () {
@@ -179,6 +180,29 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
     {
         this.arrow.rotation += 0.01;
        // game.physics.arcade.collide(player, layer);
+        if (cursors.left.isDown)
+        {
+           this.player.setVelocityX(-160);
+
+            //player.anims.play('left', true);
+        }
+        else if (cursors.right.isDown)
+        {
+            this.player.setVelocityX(160);
+
+            //player.anims.play('right', true);
+        }
+        else
+        {
+            this.player.setVelocityX(0);
+
+            //player.anims.play('turn');
+        }
+
+        if (cursors.up.isDown)
+        {
+            this.player.setVelocityY(-130);
+        }
     }
 
     // formatTime(seconds){ //ref - https://phaser.discourse.group/t/countdown-timer/2471/6
@@ -304,7 +328,7 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/
         let arr = [];
         var p1C = true;
         var p2C = true;
-        var p3C = true; 
+        var p3C = true;  //push all characters into array and manually set player 
         var p4C = true;
 
         var bg1 = this.add.image(100, 90, 'background');
@@ -433,6 +457,9 @@ var config = {
 
 var cursors;
 var playerTest;
+
+var scoreLeft = 50;
+var scoreRight = 50;
 
 var game = new Phaser.Game(config);
 //var cursors;
