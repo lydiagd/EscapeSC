@@ -1,5 +1,5 @@
 ﻿//import {TitleScene} from './TitleScene.js';
-class OpeningScreen extends Phaser.Scene {
+class OpeningScreen extends Phaser.Scene { /******** OPENING SCREEN ********/
     constructor ()
     {
         super({key: 'OpeningScreen'});
@@ -29,7 +29,7 @@ class OpeningScreen extends Phaser.Scene {
 }
 
 
-class TitleScene extends Phaser.Scene {
+class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
 
     // init(data)
     // {
@@ -78,24 +78,6 @@ class TitleScene extends Phaser.Scene {
         icon.setInteractive({useHandCursor: true});
         icon.on('pointerup', this.clickButton2, this);
 
-        // var pig = this.add.image(250, 100, 'pig');
-        // pig.setScale(.03);
-
-        //createFig.on('pointerdown', () => this.clickButton2());
-
-        //this.input.manager.enabled = true;
-
-        // var btn = this.add.image(175, 300, 'restart');
-        // btn.setInteractive();
-        // btn.setOrigin(0);
-        // btn.on('pointerup', this.startGame, this);
-
-        // this.input.once('pointerdown', function () {
-
-        //     this.scene.start('sceneB');
-
-        // }, this);
-
         
     }
 
@@ -126,7 +108,7 @@ class TitleScene extends Phaser.Scene {
 
 
 
-class SceneB extends Phaser.Scene {
+class SceneB extends Phaser.Scene { /******** GAME #2 ********/
 
     constructor ()
     {
@@ -136,13 +118,55 @@ class SceneB extends Phaser.Scene {
     preload ()
     {
         this.load.image('arrow', 'assets/arrow.png');
+        this.load.image('character', './assets/pig.png');
+        this.load.image('boxObj', './assets/boxBlock.png');
+        // this.load.tilemap('tmap', './assets/gameMap.csv', null, Phaser.Tilemap.CSV);
+        // this.load.image('tiles', './assets/tiles.png');
     }
 
     create ()
     {
-        // "#4488AA";
+        // refer - https://samme.github.io/phaser-examples-mirror/tilemaps/csv%20map%20collide.html
+        //var map = this.add.tilemap('tmap', 16, 16);
+        // map.addTilesetImage('tiles');
+
+        // var layer = map.createLayer(0);
+
+        // //  Resize the world
+        // layer.resizeWorld();
+
+        // //  This isn't totally accurate, but it'll do for now
+        // map.setCollisionBetween(54, 83);
+
+
+        this.player = this.physics.add.sprite(48, 48, 'character', 1).setScale(0.1);
+
+        var box = this.add.image(600,550, 'boxObj').setScale(.2);
+
+        // this.physics.enable(player, Phaser.Physics.ARCADE);
+
+        // player.body.setSize(10, 14, 2, 1);
+
+        cursors = this.input.keyboard.createCursorKeys();
+        this.player.setCollideWorldBounds(true).setBounce(.2);
+
+        var help = this.add.text(16, 16, 'Use arrows to move', { font: '14px Arial', fill: '#ffffff' });
+
+
+
+        //playerTest = this.add.sprite(100,100, 'pig').setScale(0.5);
         this.arrow = this.add.sprite(400, 300, 'arrow').setOrigin(0, 0.5);
         this.arrow.setScale(.5);
+
+
+        this.initialTime = 30;
+
+        this.text = this.add.text(300, 16, 'Countdown: '+ this.initialTime, { font: '22px Arial', fill: '#ffffff' });
+        // + formatTime(this.initialTime)
+
+        // Each 1000 ms call onEvent
+        var timedEvent = this.time.addEvent({ delay: 1000, callback: onTimeEvent, callbackScope: this, loop: true });
+
 
         this.input.once('pointerdown', function () {
 
@@ -154,11 +178,30 @@ class SceneB extends Phaser.Scene {
     update ()
     {
         this.arrow.rotation += 0.01;
+       // game.physics.arcade.collide(player, layer);
+    }
+
+    // formatTime(seconds){ //ref - https://phaser.discourse.group/t/countdown-timer/2471/6
+    //     // Minutes
+    //     var minutes = Math.floor(seconds/60);
+    //     // Seconds
+    //     var partInSeconds = seconds%60;
+    //     // Adds left zeros to seconds
+    //     partInSeconds = partInSeconds.toString().padStart(2,'0');
+    //     // Returns formated time
+    //     return `${minutes}:${partInSeconds}`;
+    // }
+    
+    
+    ontimeEvent ()
+    {
+        this.initialTime -= 1; // One second
+        this.text.setText('Countdown: ' + this.initialTime);
     }
 
 }
 
-class SceneC extends Phaser.Scene {
+class SceneC extends Phaser.Scene { /******** GAME #3 ********/
 
     constructor ()
     {
@@ -169,7 +212,7 @@ class SceneC extends Phaser.Scene {
     preload ()
     {
         this.load.spritesheet('character', 
-        'assets/mario.png',
+        './assets/pig.png',
         { frameWidth: 32, frameHeight: 48 });
         this.load.image('ground', './assets/ground.png');
         this.load.image('sky', './assets/sky.png');
@@ -189,7 +232,7 @@ class SceneC extends Phaser.Scene {
 
         cursors = this.input.keyboard.createCursorKeys();
 
-        this.player = this.physics.add.sprite(100, 450, 'character');
+        this.player = this.physics.add.sprite(100, 450, 'character').setScale(4);
         //player.body.setVelocityX(0);
 
         // player.setBounce(0.2);
@@ -235,7 +278,7 @@ class SceneC extends Phaser.Scene {
 }
 
 
-class Character extends Phaser.Scene
+class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/
 {
     init()
     {
@@ -295,11 +338,11 @@ class Character extends Phaser.Scene
         p2.setScale(0.1);
         p2.inputEnabled = true;
 
-        // while(p2C == true)
-        // {
-        //     p2.on('pointerover', function(){p2.alpha = 1;}, this);
-        //     p2.on('pointerout', function(){p2.alpha = 0.5;}, this);
-        // }
+        if(p2C == true)
+        {
+            p2.on('pointerover', function(){p2.alpha = 1;}, this);
+            p2.on('pointerout', function(){p2.alpha = 0.5;}, this);
+        }
 
         p2.on('pointerup', this.setPlayer2, this);
 
@@ -326,14 +369,14 @@ class Character extends Phaser.Scene
     {
         //player = this.add.sprite('character');
         // player = arr[0];
-        // p1C = false, p2C = true, p3C = true, p4C = true;
+        p1C = false, p2C = true, p3C = true, p4C = true;
     }
 
     setPlayer2()
     {
-        //player = this.add.sprite('character');
-        // player = arr[1];
-        // p1C = true, p2C = false, p3C = true, p4C = true;
+        ///player = this.add.sprite('character');
+        //player = arr[1];
+        p1C = true, p2C = false, p3C = true, p4C = true;
     }
 
     setPlayer3()
@@ -349,6 +392,8 @@ class Character extends Phaser.Scene
     }
 
     update() {
+
+        // 
         // if (p1.input.pointerOver())
         // {
         //     p1.alpha = 1;
@@ -386,8 +431,11 @@ var config = {
     scene: [ OpeningScreen, TitleScene, SceneB, SceneC, Character ]
 };
 
-var game = new Phaser.Game(config);
 var cursors;
+var playerTest;
+
+var game = new Phaser.Game(config);
+//var cursors;
 
 game.scene.start(OpeningScreen);
 
