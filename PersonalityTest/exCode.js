@@ -50,18 +50,18 @@ class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
     }
 
     create() {
-        var createdCharacter = true
-
         var text = this.add.text(250, 300, 'click to begin game', { font: '16px Courier', fill: '#0f0' })
-        // text.setInteractive({ useHandCursor: true }).on('pointerover', () => this.enterButtonHoverState() )
-        // .on('pointerout', () => this.enterButtonRestState() ).on('pointerdown', () => this.clickButton2())
-
+        var face = this.add.image(210, 300, 'pig')
+        face.setInteractive({ useHandCursor: true })
+        face.setScale(0.04)
+        if (this.player == null) {
+            text.alpha = 0.4
+            face.alpha = 0.4
+        }
+        
         var createFig = this.add.text(250, 400, 'click to create your character', { font: '16px Courier', fill: '#0f0' })
         //createFig.setInteractive({ useHandCursor: true })
-        var face = this.add.image(210, 300, 'pig')
-        face.setScale(0.04)
-        face.setInteractive({ useHandCursor: true })
-        if (createdCharacter == true) {
+        if (this.player != null) {
             face.on('pointerup', this.clickButton, this)
         }
         else {

@@ -7,6 +7,7 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         super({ key: 'sceneB' })
         this.player
         this.cursors
+        this.text
     }
 
     init(data)
@@ -63,7 +64,6 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
 
         // Each 1000 ms call onEvent
         //timedEvent = this.time.addEvent({ delay: 1000, callback: onTimeEvent, callbackScope: this, loop: true })
-
 
         this.input.once('pointerdown', function () {
 
