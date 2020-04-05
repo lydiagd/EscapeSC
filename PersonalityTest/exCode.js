@@ -1,5 +1,6 @@
 ﻿import SceneB from './scenes/sceneB.js'
 import SceneC from './scenes/sceneC.js'
+import LoadScreen from './scenes/LoadScreen.js';
 
 class OpeningScreen extends Phaser.Scene { /******** OPENING SCREEN ********/
     constructor() {
@@ -26,20 +27,27 @@ class OpeningScreen extends Phaser.Scene { /******** OPENING SCREEN ********/
         text.on('pointerup', this.clickButton, this)
     }
     clickButton() {
-        this.scene.start('TitleScene')
+        this.scene.start('LoadScreen')
     }
 }
+
+
+
+
 
 class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
 
     init(data)
     {
         this.player = data.player
+        //this.rScore = data.rScore
     }
 
     constructor() {
         super({ key: 'TitleScene' })
         this.player
+        this.lScore
+        this.rScore
     }
 
     preload() {
@@ -186,7 +194,6 @@ var config = {
     width: 800,
     height: 600,
     backgroundColor: '#000000',
-    //parent: 'phaser-example',
     pixelArt: true,
     physics: {
         default: 'arcade',
@@ -195,7 +202,7 @@ var config = {
             debug: false // change if you need
         }
     },
-    scene: [OpeningScreen, TitleScene, SceneB, SceneC, Character]
+    scene: [OpeningScreen, LoadScreen, TitleScene, SceneB, SceneC, Character]
 }
 
 // don't know if we need this class, depends on how complicated the

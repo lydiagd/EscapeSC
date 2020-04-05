@@ -1,8 +1,16 @@
+import Character from '../exCode.js'
+
 class SceneC extends Phaser.Scene { /******** GAME #3 ********/
+
+    init(data)
+    {
+        this.player = data.player;
+    }
 
     constructor ()
     {
         super({ key: 'sceneC' });
+        this.player;
         
     }
 
@@ -26,10 +34,13 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
 
         platforms.create(400, 568, 'ground').setScale(0.2).refreshBody();
 
+        // create physics player from the imported player data
+        this.player = this.physics.add.sprite(48, 48, this.player.texture.key, 1).setScale(0.1)
+
 
         cursors = this.input.keyboard.createCursorKeys();
 
-        this.player = this.physics.add.sprite(100, 450, 'character').setScale(4);
+        //this.player = this.physics.add.sprite(100, 450, 'character').setScale(4);
         //player.body.setVelocityX(0);
 
         // player.setBounce(0.2);
