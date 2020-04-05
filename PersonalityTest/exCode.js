@@ -31,10 +31,6 @@ class OpeningScreen extends Phaser.Scene { /******** OPENING SCREEN ********/
     }
 }
 
-
-
-
-
 class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
 
     init(data)
@@ -143,9 +139,9 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
 
     addNewPlayer(x, y, key) {
         //  background
-        var bg = this.add.image(x, y, 'background')
-        bg.setInteractive({ useHandCursor: true })
-        bg.setScale(0.8)
+        // var bg = this.add.image(x, y, 'background')
+        // bg.setInteractive({ useHandCursor: true })
+        // bg.setScale(0.8)
         //  sprite
         var player = this.add.sprite(x, y, key)
         console.log("debug player: ", player, player.x, player.y)
@@ -155,7 +151,6 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
         player.alpha = CHARACTER_OPAQUE
         player.on('pointerover', function () { 
             this.alpha = 1
-            console.log("POINTER OVER!")
         })
         player.on('pointerout', function () { this.alpha = CHARACTER_OPAQUE })
         // save 'this' to a variable for callbacks
@@ -171,7 +166,6 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
     setPlayer(player) {
         this.player = player
         console.log("Selected character! set player", player)
-        player
         this.update()
     }
 
