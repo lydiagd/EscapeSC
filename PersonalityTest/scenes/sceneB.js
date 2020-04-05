@@ -21,24 +21,17 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         this.load.image('arrow', 'assets/arrow.png')
         this.load.image('character', './assets/pig.png')
         this.load.image('boxObj', './assets/boxBlock.png')
-        // this.load.tilemap('tmap', './assets/gameMap.csv', null, Phaser.Tilemap.CSV)
-        // this.load.image('tiles', './assets/tiles.png')
+        this.load.tilemapCSV("map", "../assets/gameMap.csv");
+
+        this.load.image('tiles', './assets/tiles.png')
         var timedEvent
     }
 
     create ()
     {
-        // refer - https://samme.github.io/phaser-examples-mirror/tilemaps/csv%20map%20collide.html
-        //var map = this.add.tilemap('tmap', 16, 16)
-        // map.addTilesetImage('tiles')
-
-        // var layer = map.createLayer(0)
-
-        // //  Resize the world
-        // layer.resizeWorld()
-
-        // //  This isn't totally accurate, but it'll do for now
-        // map.setCollisionBetween(54, 83)
+        const map = this.make.tilemap({ key: "map", tileWidth: 16, tileHeight: 16 });
+        const tileset = map.addTilesetImage("tiles");
+        const layer = map.createStaticLayer(0, tileset, 0, 0); // layer index, tileset, x, y
 
         // console.log("sceneB imported player", this.player)
         // create physics player from the imported player data
