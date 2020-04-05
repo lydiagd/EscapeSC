@@ -44,31 +44,33 @@ class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
 
     preload() {
         this.load.image('face', './assets/smileyFace.png')
-        this.load.image('icon', './assets/mario.png')
+        this.load.image('icon', './assets/boxBlock.png')
         this.load.image('pig', './assets/pig.png')
     }
 
     create() {
         var text = this.add.text(250, 300, 'click to begin game', { font: '16px Courier', fill: '#0f0' })
         var face = this.add.image(210, 300, 'pig')
+        text.setInteractive({ useHandCursor: true })
         face.setInteractive({ useHandCursor: true })
-        face.setScale(0.04)
+        face.setScale(0.12)
         if (this.player == null) {
-            text.alpha = 0.4
-            face.alpha = 0.4
+            text.alpha = CHARACTER_OPAQUE
+            face.alpha = CHARACTER_OPAQUE
+            face.on('pointerup', this.enterButtonHoverState, this)
+            text.on('pointerup', this.enterButtonHoverState, this)
+        }
+        else {
+            face.on('pointerup', this.clickButton, this)
+            text.on('pointerup', this.clickButton, this)
         }
 
         var createFig = this.add.text(250, 400, 'click to create your character', { font: '16px Courier', fill: '#0f0' })
-        //createFig.setInteractive({ useHandCursor: true })
-        if (this.player != null) {
-            face.on('pointerup', this.clickButton, this)
-        }
-        else {
-            face.on('pointerup', this.enterButtonHoverState, this)
-        }
+        createFig.setInteractive({ useHandCursor: true })
+        createFig.on('pointerdown', this.clickButton2, this)
 
         var icon = this.add.image(210, 400, 'icon')
-        icon.setScale(0.1)
+        icon.setScale(0.07)
         icon.setInteractive({ useHandCursor: true })
         icon.on('pointerup', this.clickButton2, this)
     }
@@ -93,6 +95,8 @@ class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
     }
 }
 
+var CHARACTER_SCALE = 0.2;
+var CHARACTER_OPAQUE = 0.6;
 class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
     
     init() {}
@@ -105,51 +109,47 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
 
     preload() {
         this.load.image('character', './assets/pig.png')
-        this.load.image('c2', './assets/smileyFace.png')
+        this.load.image('mario', './assets/mario.png')
         this.load.image('background', './assets/whiteRectangle.png')
     }
 
     create() {
-        var bg1 = this.add.image(100, 90, 'background')
-        bg1.setScale(0.8)
-        var bg2 = this.add.image(300, 90, 'background')
-        bg2.setScale(0.8)
-
         // CHARACTER OPTION 1
-        var p1 = this.add.sprite(90, 90, 'character')
-        this.addNewPlayer(p1, 0.06)
+        this.addNewPlayer(90, 90, 'character')
 
         // CHARACTER OPTION 2
-        var p2 = this.add.sprite(300, 90, 'c2')
-        this.addNewPlayer(p2, 0.1)
+        this.addNewPlayer(300, 90, 'mario')
 
         // RETURN TO MAIN SCREEN
-        var text = this.add.text(250, 400, 'click to return back to menu screen', { font: '16px Courier', fill: '#ffffff' })
+        var text = this.add.text(250, 500, 'click to return back to menu screen', { font: '16px Courier', fill: '#ffffff' })
         text.setInteractive({ useHandCursor: true })
         text.setInteractive()
         text.on('pointerup', this.clickButton, this)
 
         this.input.manager.enabled = true
-
-        // this.input.once('pointerdown', function () {
-        //     this.scene.start('TitleScene')
-        // }, this)
     }
 
     clickButton() {
         this.scene.start('TitleScene', { player: this.player })
     }
 
-    addNewPlayer(player, scale) {
+    addNewPlayer(x, y, key) {
+        //  background
+        var bg = this.add.image(x, y, 'background')
+        bg.setInteractive({ useHandCursor: true })
+        bg.setScale(0.8)
+        //  sprite
+        var player = this.add.sprite(x, y, key)
+        console.log("debug player: ", player, player.x, player.y)
         player.setInteractive({ useHandCursor: true })
-        player.setScale(scale)
+        player.setScale(CHARACTER_SCALE)
         player.inputEnabled = true
-        player.alpha = 0.4
+        player.alpha = CHARACTER_OPAQUE
         player.on('pointerover', function () { 
             this.alpha = 1
             console.log("POINTER OVER!")
         })
-        player.on('pointerout', function () { this.alpha = 0.4 })
+        player.on('pointerout', function () { this.alpha = CHARACTER_OPAQUE })
         // save 'this' to a variable for callbacks
         var self = this
         player.on('pointerup', function(){
@@ -171,7 +171,7 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
     update() {      
         for(var i = 0; i < this.arr.length; i++) {
             if (this.player != this.arr[i]) {
-                this.arr[i].alpha = 0.4
+                this.arr[i].alpha = CHARACTER_OPAQUE
             } else {
                 this.arr[i].alpha = 1
             }
@@ -191,7 +191,7 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 300 }, // will affect our player sprite
+            gravity: { y: 0 }, // will affect our player sprite
             debug: false // change if you need
         }
     },
