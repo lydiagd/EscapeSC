@@ -6,7 +6,9 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
     {
         super({ key: 'sceneC' });
         this.player;
-        
+        this.cursors;
+        this.curItem;
+        this.inv = false;
     }
 
     init(data)
@@ -16,14 +18,20 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
 
     preload ()
     {
-        // this.load.spritesheet('character', 
-        // './assets/pig.png',
-        // { frameWidth: 32, frameHeight: 48 });
+        this.load.spritesheet('character', 
+        './assets/pig.png',
+        { frameWidth: 32, frameHeight: 48 });
         // this.load.image('ground', './assets/ground.png');
         // this.load.image('sky', './assets/sky.png');
 
         this.load.image('dun_tiles', '../assets/dungeon_tiles.png');
         this.load.tilemapTiledJSON("dun_map", "../tilesets/castleMap.json");
+
+        this.load.image('shoe', '../assets/shoe.png');
+        this.load.image('gun', '../assets/gun.png');
+        this.load.image('plush','../assets/plushToy.png')
+        this.load.image('cloud', '../assets/cloud.png')
+        this.load.image('spider', '../assets/spider.png')
     }
 
 
@@ -32,63 +40,69 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
         const map = this.make.tilemap({key:"dun_map"})
         const tileset = map.addTilesetImage("castle", "dun_tiles")
         // Parameters: layer name (or index) from Tiled, tileset, x, y
-        const worldLayer = map.createStaticLayer("Tile Layer 1", tileset, 0, 0)
-        //worldLayer.setCollisionByProperty({ collides: true })
+        const worldLayer = map.createStaticLayer("Tile Layer 1", tileset, 0, 0).setScale(3.5)
+        worldLayer.setCollisionByProperty({ collides: true })
 
-        // this.add.image(400, 300, 'sky');
-
-        // this.platform = this.physics.add.staticGroup();
-
-        // platform.create(400, 568, 'ground').setScale(0.2).refreshBody();
+        this.gun = this.physics.add.image(400, 200, 'gun').setScale(0.05);
+        this.shoe = this.physics.add.image(460, 190, 'shoe').setScale(0.2);
+        this.plush = this.physics.add.image(500, 300, 'plush').setScale(0.1);
+        this.spider = this.physics.add.image(140, 100, 'spider').setScale(.4);
 
         // create physics player from the imported player data
-        // this.player = this.physics.add.sprite(0, 700, this.player.texture.key, 1)
+        // this.player = this.physics.add.sprite(700, 300, this.player, 1)
         // this.physics.add.collider(this.player, worldLayer)
         // this.player.setCollideWorldBounds(true).setBounce(.2)
 
+        this.text = this.add.text(700, 200, "ITEM", {fill: '#ffffff'});
+        this.cloud = this.add.image(735,275, 'cloud').setScale(0.4);
+        this.curItem = this.add.text(680,250, 'grab an item', {fill: '#000000'});
 
-        //cursors = this.input.keyboard.createCursorKeys();
+        this.cursors = this.input.keyboard.createCursorKeys();
 
-        //this.player = this.physics.add.sprite(100, 450, 'character').setScale(4);
-        //player.body.setVelocityX(0);
+        this.player = this.physics.add.sprite(100, 450, this.player.texture.key,1).setScale(0.12);
 
-        // player.setBounce(0.2);
+        this.physics.add.overlap(this.player, this.plush, this.choose, null, this)
+
+        this.physics.add.overlap(this.player, this.spider, this.kill, null, this)
+ 
         // this.player.setCollideWorldBounds(true).setBounce(.2);
-        // this.physics.add.collider(player, platform);
+
         
     }
 
     update ()
     {
 
-        // if (cursors.left.isDown) {
-        // player.body.setVelocityX(-350);
-        // } else if (cursors.right.isDown) {
-        // player.body.setVelocityX(350);
-        // }
-        // // if (cursors.left.isDown)
-        // // {
-        // //    player.setVelocityX(-160);
+        this.player.setVelocity(0)
+        let speed = 160
+        // Horizontal movement
+        if (this.cursors.left.isDown) {
+            this.player.setVelocityX(-speed)
+        } else if (this.cursors.right.isDown) {
+            this.player.setVelocityX(speed)
+        }
 
-        // //     //player.anims.play('left', true);
-        // // }
-        // else if (cursors.right.isDown)
-        // {
-        //     player.setVelocityX(160);
+        // Vertical movement
+        if (this.cursors.up.isDown) {
+            this.player.setVelocityY(-speed)
+        } else if (this.cursors.down.isDown) {
+            this.player.setVelocityY(speed)
+        }
 
-        //     //player.anims.play('right', true);
-        // }
-        // else
-        // {
-        //     player.setVelocityX(0);
+        this.player.update()
 
-        //     //player.anims.play('tu rn');
-        // }
 
-        // if (cursors.up.isDown && player.body.touching.down)
-        // {
-        //     player.setVelocityY(-330);
-        // }   
+    }
+
+    choose()
+    {
+        this.curItem 
+    }
+
+    kill()
+    {
+        //do scoring
+        this.scene.start('compileResults');
     }
 }
 
