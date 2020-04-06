@@ -22,18 +22,15 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
         // this.load.image('ground', './assets/ground.png');
         // this.load.image('sky', './assets/sky.png');
 
-        this.load.tilemapTiledJSON("map", "../tilesets/castleMap.json");
-        this.load.image('tiles', '../assets/dungeon_tiles.png');
-        // this.load.image('tiles', '../assets/tmw_desert_spacing.png')
-        // this.load.tilemapTiledJSON("map", "../tilesets/desert_map.json")
+        this.load.image('dun_tiles', '../assets/dungeon_tiles.png');
+        this.load.tilemapTiledJSON("dun_map", "../tilesets/castleMap.json");
     }
 
 
     create ()
     {
-        const map = this.make.tilemap({key:"map"})
-        //const tileset = map.addTilesetImage("tmw_desert_spacing", "tiles")
-        const tileset = map.addTilesetImage("dungeon_tiles", "tiles")
+        const map = this.make.tilemap({key:"dun_map"}, 40, 40)
+        const tileset = map.addTilesetImage("castle", "dun_tiles")
         // Parameters: layer name (or index) from Tiled, tileset, x, y
         const worldLayer = map.createStaticLayer("Tile Layer 1", tileset, 0, 0)
         //worldLayer.setCollisionByProperty({ collides: true })
@@ -85,7 +82,7 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
         // {
         //     player.setVelocityX(0);
 
-        //     //player.anims.play('turn');
+        //     //player.anims.play('tu rn');
         // }
 
         // if (cursors.up.isDown && player.body.touching.down)
