@@ -1,6 +1,6 @@
 import Character from '../exCode.js'
 
-var CHARACTER_SCALE = 0.1
+var CHARACTER_SCALE = 0.13
 class SceneB extends Phaser.Scene { /******** GAME #2 ********/
     
     constructor ()
@@ -11,7 +11,7 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         this.cursors
         this.timeText
         this.initialTime
-        this.foundbox = false
+        this.gotBox = false
     }
 
     init(data)
@@ -26,7 +26,6 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         this.load.image('boxObj', './assets/boxBlock.png')
         this.load.image('tiles', '../assets/tmw_desert_spacing.png')
         this.load.tilemapTiledJSON("map", "../tilesets/desert_map.json")
-        var timedEvent
     }
 
     create ()
@@ -52,38 +51,43 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         this.player.setCollideWorldBounds(true).setBounce(.2)
         
         this.box = this.physics.add.image(330,125, 'boxObj').setScale(.06)
+        this.box.alpha = 0.1
         this.physics.add.overlap(this.player, this.box, this.foundBox, null, this)
 
         this.cursors = this.input.keyboard.createCursorKeys()
         
         // set text and timer arrow
         this.add.text(16, 16, 'Use arrows to move', { font: '26px Arial', fill: '#ffffff' })
-        this.arrow = this.add.sprite(400, 300, 'arrow').setOrigin(0, 0.3)
-        this.arrow.setScale(.4)
+        // this.arrow = this.add.sprite(400, 300, 'arrow').setOrigin(0, 0.3)
+        // this.arrow.setScale(.4)
         this.initialTime = 30
         this.timeText = this.add.text(300, 16, 'Countdown: '+ this.initialTime, { font: '26px Arial', fill: '#ffffff' })
         // + formatTime(this.initialTime)
         // Each 1000 ms call onEvent
         this.time.addEvent({ delay: 1000, callback: this.onTimeEvent, callbackScope: this, loop: true })
-        this.input.once('pointerdown', function () {
-            this.scene.start('sceneC', {player: this.player})
-        }, this)
     }
 
     foundBox() {
-        if(this.foundBox) {
+        if(this.gotBox) {
             // already found box
             return
         } else {
             // do something when box is found
-            console.log("debug: found box")
-            this.foundBox = true
+            console.log("debug: found box: ", this.box)
+            this.box.alpha = 1
+            this.tweens.add({
+                targets: this.box,
+                alpha: 0,
+                duration: 2000,
+                repeat: 0
+            });
+            this.gotBox = true
         }
     }
 
     update ()
     {
-        this.arrow.rotation += 0.01
+        // this.arrow.rotation += 0.01
         // Stop any previous movement from the last frame
         this.player.setVelocity(0)
         let speed = 160
@@ -101,9 +105,13 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
             this.player.setVelocityY(speed)
         }
 
+        if (this.player.y < 40) {
+            this.scene.start('sceneC', {player: this.player})
+        }
+
         this.player.update()
         this.box.update()
-        this.physics.add.overlap(this.player, this.box, this.foundBox)
+        this.physics.add.overlap(this.player, this.box, this.foundBox, null, this)
     }
 
     // formatTime(seconds){ //ref - https://phaser.discourse.group/t/countdown-timer/2471/6
