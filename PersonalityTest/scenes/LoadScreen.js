@@ -5,7 +5,7 @@ class LoadScreen extends Phaser.Scene {
         super({ key: 'LoadScreen' });
     }
     preload() { //https://www.patchesoft.com/phaser-3-loading-screen
-        var randomText = this.add.text(30, 32, "I am testing loading in", { fontSize: '16px', fill: '#0f0' });
+        //var randomText = this.add.text(30, 32, "I am testing loading in", { fontSize: '16px', fill: '#0f0' });
 
         this.graphics = this.add.graphics();
 		this.newGraphics = this.add.graphics();

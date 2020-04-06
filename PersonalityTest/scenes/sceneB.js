@@ -65,6 +65,12 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         // + formatTime(this.initialTime)
         // Each 1000 ms call onEvent
         this.time.addEvent({ delay: 1000, callback: this.onTimeEvent, callbackScope: this, loop: true })
+
+        //ADDED FOR TESTING PURPOSES
+        this.input.once('pointerdown', function () {
+            this.scene.start('sceneC');
+        }, this);
+
     }
 
     foundBox() {
