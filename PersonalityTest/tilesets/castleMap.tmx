@@ -3,7 +3,7 @@
  <editorsettings>
   <export target="castleMap.json" format="json"/>
  </editorsettings>
- <tileset firstgid="1" name="castle" tilewidth="8" tileheight="8" spacing="1" margin="1" tilecount="1680" columns="40">
+ <tileset firstgid="1" name="castle" tilewidth="8" tileheight="8" spacing="1" margin="1" tilecount="27710" columns="40">
   <image source="../assets/dungeon_tiles.png" width="368" height="384"/>
   <tile id="123">
    <properties>

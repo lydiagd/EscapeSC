@@ -29,7 +29,7 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
 
     create ()
     {
-        const map = this.make.tilemap({key:"dun_map"}, 40, 40)
+        const map = this.make.tilemap({key:"dun_map"})
         const tileset = map.addTilesetImage("castle", "dun_tiles")
         // Parameters: layer name (or index) from Tiled, tileset, x, y
         const worldLayer = map.createStaticLayer("Tile Layer 1", tileset, 0, 0)
