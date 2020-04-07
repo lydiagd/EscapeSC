@@ -51,18 +51,19 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         this.player.setCollideWorldBounds(true).setBounce(.2)
         
         this.box = this.physics.add.image(330,125, 'boxObj').setScale(.06)
-        this.box.alpha = 0.1
+        this.box.alpha = 0.05;
         this.physics.add.overlap(this.player, this.box, this.foundBox, null, this)
 
         this.cursors = this.input.keyboard.createCursorKeys()
         
         // set text and timer arrow
         this.add.text(16, 16, 'Use arrows to move', { font: '26px Arial', fill: '#ffffff' })
-        // this.arrow = this.add.sprite(400, 300, 'arrow').setOrigin(0, 0.3)
-        // this.arrow.setScale(.4)
+
+        this.add.text(190, 330, 'RACE AGAINST THE CLOCK', { font: '24px Arial', fill: '#ffffff' })
+
         this.initialTime = 30
-        this.timeText = this.add.text(300, 16, 'Countdown: '+ this.initialTime, { font: '26px Arial', fill: '#ffffff' })
-        // + formatTime(this.initialTime)
+        this.timeText = this.add.text(475, 550, 'Countdown: '+ this.initialTime, { font: '26px Arial', fill: '#ffffff' })
+
         // Each 1000 ms call onEvent
         this.time.addEvent({ delay: 1000, callback: this.onTimeEvent, callbackScope: this, loop: true })
 

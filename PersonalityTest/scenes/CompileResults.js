@@ -18,11 +18,11 @@ class CompileResults extends Phaser.Scene {
 		this.newGraphics.fillStyle(0x3587e2, 1);
 		this.newGraphics.fillRectShape(progressBarFill);
 
-		var loadingText = this.add.text(250,260,"Loading: ", { fontSize: '32px', fill: '#0f0' });
+		var loadingText = this.add.text(250,260,"COMPILING RESULTS - ", { fontSize: '32px', fill: '#0f0' });
 
 
 		this.load.image('background', '../assets/pig.png');
-		for(var i =0;i<85;i++) {
+		for(var i =0;i<100;i++) {
 			this.load.image('background_'+i, '../assets/pig.png');
 		}
 
@@ -37,7 +37,7 @@ class CompileResults extends Phaser.Scene {
         this.newGraphics.fillRectShape(new Phaser.Geom.Rectangle(205, 205, percentage*390, 40));
                 
         percentage = percentage * 100;
-        this.loadingText.setText("Loading: " + percentage.toFixed(2) + "%");
+        this.loadingText.setText("COMPILING RESULTS - " + percentage.toFixed(2) + "% COMPLETE");
         console.log("P:" + percentage);
         
     }
