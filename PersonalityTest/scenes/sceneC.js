@@ -47,17 +47,17 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
         this.spider = this.physics.add.image(140, 100, 'spider').setScale(.4);
 
         // create physics player from the imported player data
-        // this.player = this.physics.add.sprite(700, 300, this.player, 1)
-        // this.physics.add.collider(this.player, worldLayer)
-        // this.player.setCollideWorldBounds(true).setBounce(.2)
+        this.player = this.physics.add.sprite(100, 450, this.player, 1).setScale(.12);
+        this.physics.add.collider(this.player, worldLayer)
+        this.player.setCollideWorldBounds(true).setBounce(.2)
 
         this.text = this.add.text(700, 200, "ITEM", {fill: '#ffffff'});
         this.cloud = this.add.image(735,275, 'cloud').setScale(0.4);
-        this.curItem = this.add.text(680,250, 'grab an item', {fill: '#000000'});
+        this.curItem = this.add.text(665,250, 'grab an item', {fill: '#000000'});
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        this.player = this.physics.add.sprite(100, 450, this.player.texture.key,1).setScale(0.12);
+        // this.player = this.physics.add.sprite(100, 450, this.player.texture.key,1).setScale(0.12);
 
         this.physics.add.overlap(this.player, this.plush, this.choose, null, this)
 

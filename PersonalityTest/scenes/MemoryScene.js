@@ -18,7 +18,7 @@ class MemoryScene extends Phaser.Scene {
 
     create() {
 
-        this.player = this.physics.add.sprite(0, 700, this.player.texture.key, 1).setScale(0.5);
+        this.player = this.physics.add.sprite(50, 600, this.player.texture.key, 1).setScale(0.5);
 
         this.cursors = this.input.keyboard.createCursorKeys()
 

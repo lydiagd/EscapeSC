@@ -25,7 +25,7 @@ class CompileResults extends Phaser.Scene {
 		this.newGraphics.fillStyle(0x3587e2, 1);
 		this.newGraphics.fillRectShape(progressBarFill);
 
-		var loadingText = this.add.text(250,260,"COMPILING RESULTS - ", { fontSize: '32px', fill: '#0f0' });
+		var loadingText = this.add.text(80,260,"COMPILING RESULTS - ", { fontSize: '32px', fill: '#0f0' });
 
 
 		this.load.image('background', '../assets/sky.png');

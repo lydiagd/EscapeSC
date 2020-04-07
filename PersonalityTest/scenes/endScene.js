@@ -23,9 +23,9 @@ class EndScene extends Phaser.Scene {
     create()
     {
         //lbrain = skillful adaptability , rbrain = creative logistician
-        var text = this.add.text(300, 100, 'RESULTS', { font: '24px Courier', fill: '#0f0' })
-        var lbrain = this.add.text(50, 250, 'skillful adaptability: ' + this.lScore, { font: '16px Courier', fill: '#0f0' })
-        var rbrain = this.add.text(50, 330, 'creative logistician score: '+ this.rScore, { font: '16px Courier', fill: '#0f0' })
+        var text = this.add.text(350, 75, 'RESULTS', { font: '24px Courier', fill: '#0f0' })
+        var lbrain = this.add.text(50, 130, 'Skillful Adaptability Score: ' + this.lScore, { font: '16px Courier', fill: '#0f0' })
+        var rbrain = this.add.text(50, 185, 'Creative Logistician Score: '+ this.rScore, { font: '16px Courier', fill: '#0f0' })
 
         
 
@@ -37,11 +37,13 @@ class EndScene extends Phaser.Scene {
 
     lbrainPath()
     {
+        //print paragraph about personality results
         //print shyguy
     }
 
     rbrainPath()
     {
+        //print paragraph about personality results
         //print splash
     }
 
