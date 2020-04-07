@@ -18,11 +18,9 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
 
     preload ()
     {
-        this.load.spritesheet('character', 
-        './assets/pig.png',
-        { frameWidth: 32, frameHeight: 48 });
-        // this.load.image('ground', './assets/ground.png');
-        // this.load.image('sky', './assets/sky.png');
+        // this.load.spritesheet('character', 
+        // './assets/pig.png',
+        // { frameWidth: 32, frameHeight: 48 });
 
         this.load.image('dun_tiles', '../assets/dungeon_tiles.png');
         this.load.tilemapTiledJSON("dun_map", "../tilesets/castleMap.json");
@@ -102,7 +100,7 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
     kill()
     {
         //do scoring
-        this.scene.start('compileResults');
+        this.scene.start('CompileResults', {player: this.player});
     }
 }
 

@@ -70,7 +70,7 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         //ADDED FOR TESTING PURPOSES
         this.input.once('pointerdown', function () {
             this.scene.stop()
-            this.scene.start('sceneC')
+            this.scene.start('MemoryScene', {player: this.player});
         }, this);
 
     }

@@ -1,6 +1,10 @@
 ﻿import SceneB from './scenes/sceneB.js'
 import SceneC from './scenes/sceneC.js'
 import LoadScreen from './scenes/LoadScreen.js';
+import CompileResults from './scenes/CompileResults.js';
+import EndScene from './scenes/endScene.js';
+import MemoryScene from './scenes/MemoryScene.js';
+// import endScene from './scenes/endScene.js';
 
 class OpeningScreen extends Phaser.Scene { /******** OPENING SCREEN ********/
     constructor() {
@@ -196,7 +200,7 @@ var config = {
             debug: false // change if you need
         }
     },
-    scene: [OpeningScreen, LoadScreen, TitleScene, SceneB, SceneC, Character]
+    scene: [OpeningScreen, LoadScreen, TitleScene, SceneB, MemoryScene, SceneC, Character, CompileResults, EndScene]//, CompileResults, endScene]
 }
 
 // don't know if we need this class, depends on how complicated the

@@ -1,8 +1,15 @@
+import Character from '../exCode.js'
+
 class CompileResults extends Phaser.Scene {
 
     constructor()
     {
         super({ key: 'CompileResults' });
+        this.player
+    }
+    init(data)
+    {
+        this.player = data.player
     }
     preload() { //https://www.patchesoft.com/phaser-3-loading-screen
         //var randomText = this.add.text(30, 32, "I am testing loading in", { fontSize: '16px', fill: '#0f0' });
@@ -21,9 +28,9 @@ class CompileResults extends Phaser.Scene {
 		var loadingText = this.add.text(250,260,"COMPILING RESULTS - ", { fontSize: '32px', fill: '#0f0' });
 
 
-		this.load.image('background', '../assets/pig.png');
-		for(var i =0;i<100;i++) {
-			this.load.image('background_'+i, '../assets/pig.png');
+		this.load.image('background', '../assets/sky.png');
+		for(var i =0;i<200;i++) {
+			this.load.image('background_'+i, '../assets/sky.png');
 		}
 
         //this.load.on('progress', this.updateBar);
@@ -44,8 +51,8 @@ class CompileResults extends Phaser.Scene {
 
     complete() {
 		console.log("COMPLETE!");
-		this.scene.start("endScene");
+		this.scene.start("endScene", {player: this.player});
 	}
 }
 
-export default LoadScreen
+export default CompileResults
