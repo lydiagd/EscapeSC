@@ -32,9 +32,13 @@ class OpeningScreen extends Phaser.Scene { /******** OPENING SCREEN ********/
         var text = this.add.text(250, 345, 'click to begin game', { font: '16px Courier', fill: '#0f0' })
         text.setInteractive({ useHandCursor: true })
         text.on('pointerup', this.clickButton, this)
+
+        var x = this.add.text(280, 500, 'score lbrain:  ' + data.scoreLeft)
+
+
     }
     clickButton() {
-        this.scene.start('LoadScreen', {gameData: data})
+        this.scene.start('LoadScreen', {gameData: this.data})
     }
 }
 
@@ -84,14 +88,17 @@ class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
         icon.setScale(0.07)
         icon.setInteractive({ useHandCursor: true })
         icon.on('pointerup', this.clickButton2, this)
+
+        var x = this.add.text(280, 500, 'score lbrain:  ' + data.scoreLeft)
+
     }
 
     clickButton() {
-        this.scene.start('sceneB', {player: this.player}, {gameData: data})
+        this.scene.start('sceneB', {player: this.player}, {gameData: this.data})
     }
 
     clickButton2() {
-        this.scene.start('character', {gameData: data})
+        this.scene.start('character', {gameData: this.data})
     }
 
     enterButtonHoverState() {
@@ -151,7 +158,7 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
     }
 
     clickButton() {
-        this.scene.start('TitleScene', { player: this.player }, {gameData: data})
+        this.scene.start('TitleScene', { player: this.player }, {gameData: this.data})
     }
 
     addNewPlayer(x, y, key) {

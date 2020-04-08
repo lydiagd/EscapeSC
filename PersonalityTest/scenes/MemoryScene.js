@@ -7,7 +7,7 @@ class MemoryScene extends Phaser.Scene {
     {
         super({ key: 'MemoryScene' })
         this.player;
-        this.gameData
+        this.data
         this.cursors;
         this.arr1 = []
         this.arr2 = []
@@ -20,7 +20,7 @@ class MemoryScene extends Phaser.Scene {
     init(data)
     {
         this.player = data.player;
-        this.gameData = data.gameData
+        this.data = data.gameData
     }
     preload() {
         this.add.image('bat', './assets/bat.png')
@@ -71,6 +71,8 @@ class MemoryScene extends Phaser.Scene {
         // this.gameObj1 = arr1[0];
         // this.gameObj1.setInteractive({ useHandCursor: true })
         // this.gameObj1.on('pointerup', this.choose, this)
+
+        //var x = this.add.text(280, 500, 'score lbrain:  ' + data.scoreLeft)
 
 
 

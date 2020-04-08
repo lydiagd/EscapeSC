@@ -7,7 +7,7 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
     {
         super({ key: 'sceneB' })
         this.player
-        this.gameData
+        this.data
         this.box
         this.cursors
         this.timeText
@@ -18,7 +18,7 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
     init(data)
     {
         this.player = data.player
-        this.gameData = data.gameData
+        this.data = data.gameData
     }
 
     preload ()
@@ -62,6 +62,9 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
 
         this.add.text(190, 330, 'RACE AGAINST THE CLOCK', { font: '24px Arial', fill: '#ffffff' })
 
+        //this.add.text(280, 500, 'score lbrain:  ' + data.scoreLeft)
+
+
         this.initialTime = 30
         this.timeText = this.add.text(475, 550, 'Countdown: '+ this.initialTime, { font: '26px Arial', fill: '#ffffff' })
 
@@ -71,7 +74,7 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         //ADDED FOR TESTING PURPOSES
         this.input.once('pointerdown', function () {
             this.scene.stop()
-            this.scene.start('MemoryScene', {player: this.player}, {gameData: this.gameData});
+            this.scene.start('MemoryScene', {player: this.player}, {gameData: this.data});
         }, this);
 
     }
@@ -115,7 +118,7 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         }
 
         if (this.player.y < 60) {
-            this.scene.start('sceneC', {player: this.player}, {gameData: data})
+            this.scene.start('sceneC', {player: this.player}, {gameData: this.data})
         }
 
         this.player.update()

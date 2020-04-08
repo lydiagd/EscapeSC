@@ -75,6 +75,8 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
  
         // this.player.setCollideWorldBounds(true).setBounce(.2);
 
+        var x = this.add.text(280, 500, 'score lbrain:  ' + gameData.scoreLeft)
+
         
     }
 
