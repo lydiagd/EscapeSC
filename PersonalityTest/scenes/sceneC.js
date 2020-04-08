@@ -70,8 +70,8 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
         this.cursors = this.input.keyboard.createCursorKeys();
 
         this.physics.add.overlap(this.player, this.gun, this.choose('lazer pistol'), null, this)
-        this.physics.add.overlap(this.player, this.plush, this.choose('FIREEE'), null, this)
-        this.physics.add.overlap(this.player, this.fire, this.choose('lazer pistol'), null, this)
+        this.physics.add.overlap(this.player, this.plush, this.choose('plush toy?'), null, this)
+        this.physics.add.overlap(this.player, this.fire, this.choose('FIREEE'), null, this)
         this.physics.add.overlap(this.player, this.spider, this.kill, null, this)
  
 
@@ -101,11 +101,12 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
 
         this.player.update()
         this.plush.update()
+        this.fire.update()
         this.gun.update()
 
-        this.physics.add.overlap(this.player, this.gun, this.choose('lazer pistol'), null, this)
+        // this.physics.add.overlap(this.player, this.gun, this.choose('lazer pistol'), null, this)
 
-        this.physics.add.overlap(this.player, this.plush, this.choose('plush toy'), null, this)
+        // this.physics.add.overlap(this.player, this.plush, this.choose('plush toy'), null, this)
 
 
     }
