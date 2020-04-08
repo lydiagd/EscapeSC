@@ -54,6 +54,7 @@ class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
         super({ key: 'TitleScene' })
         this.player
         this.data
+        //this.scorel = 50
     }
 
 
@@ -89,12 +90,12 @@ class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
         icon.setInteractive({ useHandCursor: true })
         icon.on('pointerup', this.clickButton2, this)
 
-        var x = this.add.text(280, 500, 'score lbrain:  ' + data.scoreLeft)
+        //var x = this.add.text(280, 500, 'score lbrain:  ' + this.data.scoreLeft)
 
     }
 
     clickButton() {
-        this.scene.start('sceneB', {player: this.player}, {gameData: this.data})
+        this.scene.start('sceneB', {player: this.player, gameData: this.data})
     }
 
     clickButton2() {
@@ -116,8 +117,6 @@ class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
 var CHARACTER_SCALE = 0.05;
 var CHARACTER_OPAQUE = 0.6;
 class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
-    
-    init() {}
 
     constructor() {
         super({ key: 'character' })
@@ -158,7 +157,7 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
     }
 
     clickButton() {
-        this.scene.start('TitleScene', { player: this.player }, {gameData: this.data})
+        this.scene.start('TitleScene', { player: this.player, gameData: this.data})
     }
 
     addNewPlayer(x, y, key) {

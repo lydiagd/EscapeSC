@@ -11,6 +11,7 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
         this.curItem;
         this.inv = false;
         this.itemBool = false
+        this.hasGrabbed = false
         
         this.gun
         this.fire
@@ -48,7 +49,7 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
         const worldLayer = map.createStaticLayer("Tile Layer 1", tileset, 0, 0).setScale(3.5)
         worldLayer.setCollisionByProperty({ collides: true })
 
-        this.gun = this.physics.add.image(510, 325, 'gun').setScale(0.02);
+        this.gun = this.physics.add.sprite(510, 325, 'gun').setScale(0.02).setInteractive();
         this.fire = this.physics.add.image(430, 120, 'fire').setScale(0.04);
         this.plush = this.physics.add.image(600, 510, 'plush').setScale(0.2);
         this.spider = this.physics.add.image(140, 100, 'spider').setScale(.5);
@@ -61,7 +62,7 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
         this.player.setCollideWorldBounds(true).setBounce(.2)
 
         this.text = this.add.text(700, 200, "ITEM", {fill: '#ffffff'});
-        this.instruction = this.add.text(680, 50, "KILL THE SPIDER", {fill: '#ffffff'})
+        this.instruction = this.add.text(655, 50, "KILL THE SPIDER", {fill: '#ffffff'})
         this.cloud = this.add.image(735,275, 'cloud').setScale(0.4);
         this.curItem = this.add.text(665,250, 'grab an item', {fill: '#000000'});
         this.itemBool = false;
@@ -69,9 +70,9 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        this.physics.add.overlap(this.player, this.gun, this.choose('lazer pistol'), null, this)
-        this.physics.add.overlap(this.player, this.plush, this.choose('plush toy?'), null, this)
-        this.physics.add.overlap(this.player, this.fire, this.choose('FIREEE'), null, this)
+        this.physics.add.overlap(this.player, this.gun, this.choose('lazer pistol', false), null, this)
+        this.physics.add.overlap(this.player, this.plush, this.choose('plush toy?', false), null, this)
+        this.physics.add.overlap(this.player, this.fire, this.choose('FIREEE', false), null, this)
         this.physics.add.overlap(this.player, this.spider, this.kill, null, this)
  
 
@@ -100,29 +101,33 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
         }
 
         this.player.update()
-        this.plush.update()
-        this.fire.update()
+        // this.plush.update()
+        // this.fire.update()
         this.gun.update()
 
-        // this.physics.add.overlap(this.player, this.gun, this.choose('lazer pistol'), null, this)
+        this.physics.add.overlap(this.player, this.gun, this.choose('lazer pistol', true), null, this)
+        
 
         // this.physics.add.overlap(this.player, this.plush, this.choose('plush toy'), null, this)
 
 
     }
 
-    choose(item)
+    choose(item, boolTrack)
     {
-        this.itemBool = true;
-        this.curItem.setText(item); 
+        if(boolTrack == true)
+        {
+            this.curItem.setText(item); 
+            this.hasGrabbed = true
+        }
     }
 
     kill()
     {
         //do scoring
-        if (this.itemBool == false)
+        if (this.hasGrabbed == false)
         {
-            var popup = this.add.text(140, 200, 'grab an item to kill the spider!')
+            var popup = this.add.text(100, 50, 'grab an item to kill the spider!')
         }
         else {
             this.scene.start('CompileResults', {player: this.player}, {gameData: this.gameData});

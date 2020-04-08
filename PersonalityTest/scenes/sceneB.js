@@ -52,7 +52,7 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         this.player.setCollideWorldBounds(true).setBounce(.2)
         
         this.box = this.physics.add.image(330,125, 'boxObj').setScale(.06)
-        this.box.alpha = 0.05;
+        this.box.alpha = 0.04;
         this.physics.add.overlap(this.player, this.box, this.foundBox, null, this)
 
         this.cursors = this.input.keyboard.createCursorKeys()
@@ -62,7 +62,7 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
 
         this.add.text(190, 330, 'RACE AGAINST THE CLOCK', { font: '24px Arial', fill: '#ffffff' })
 
-        //this.add.text(280, 500, 'score lbrain:  ' + data.scoreLeft)
+        //this.add.text(280, 500, 'score lbrain:  ' + this.data.scoreLeft)
 
 
         this.initialTime = 30
@@ -74,7 +74,7 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         //ADDED FOR TESTING PURPOSES
         this.input.once('pointerdown', function () {
             this.scene.stop()
-            this.scene.start('MemoryScene', {player: this.player}, {gameData: this.data});
+            this.scene.start('MemoryScene', {player: this.player, gameData: this.data});
         }, this);
 
     }
@@ -118,12 +118,12 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         }
 
         if (this.player.y < 100 && this.player.x > 300) {
-            this.scene.start('sceneC', {player: this.player}, {gameData: this.data})
+            this.scene.start('MemoryScene', {player: this.player}, {gameData: this.data})
         }
 
-        this.player.update()
-        this.box.update()
-        this.physics.add.overlap(this.player, this.box, this.foundBox, null, this)
+        // this.player.update()
+        // this.box.update()
+        // this.physics.add.overlap(this.player, this.box, this.foundBox, null, this)
     }
 
     // formatTime(seconds){ //ref - https://phaser.discourse.group/t/countdown-timer/2471/6
