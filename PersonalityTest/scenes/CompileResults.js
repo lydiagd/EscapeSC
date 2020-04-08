@@ -53,7 +53,7 @@ class CompileResults extends Phaser.Scene {
 
     complete() {
 		console.log("COMPLETE!");
-		this.scene.start("endScene", {player: this.player}, {lScore: this.gameData.lScore}, {rScore: this.gameData.rScore});
+		this.scene.start("endScene", {player: this.player})//, {lScore: this.gameData.lScore}, {rScore: this.gameData.rScore});
 	}
 }
 

@@ -9,6 +9,13 @@ class MemoryScene extends Phaser.Scene {
         this.player;
         this.gameData
         this.cursors;
+        this.arr1 = []
+        this.arr2 = []
+        this.arr3 = []
+        this.gameObj1
+        this.gameObj2
+        this.gameObj3
+
     }
     init(data)
     {
@@ -37,7 +44,40 @@ class MemoryScene extends Phaser.Scene {
 
     create() {
 
-        this.player = this.physics.add.sprite(50, 600, this.player.texture.key, 1).setScale(CHARACTER_SCALE);
+        //STORING DATA IN 3 ARRS
+       // gameObj1 = this.add.image()
+        let obj = this.add.image(300, 200, 'bat').setScale(0.05)
+        this.arr1.push(obj)
+        // this.arr1.push('bluecrab')
+        // this.arr1.push('bokchoy')
+        // this.arr1.push('emerald')
+        // this.arr1.push('fire')
+        // this.arr1.push('skull')
+
+        // this.arr2.push('bunny')
+        // this.arr2.push('globe')
+        // this.arr2.push('pig')
+        // this.arr2.push('brocoli')
+        // this.arr2.push('ruby')
+        // this.arr2.push('lightbulb')
+
+        // this.arr3.push('right')
+        // this.arr3.push('sapphire')
+        // this.arr3.push('down')
+        // this.arr3.push('chameleon')
+        // this.arr3.push('crab')
+        // this.arr3.push('left')
+
+        // this.gameObj1 = arr1[0];
+        // this.gameObj1.setInteractive({ useHandCursor: true })
+        // this.gameObj1.on('pointerup', this.choose, this)
+
+
+
+        //GAME LOGIC
+
+        this.player = this.physics.add.sprite(100, 525, this.player.texture.key, 1).setScale(CHARACTER_SCALE);
+        this.player.setCollideWorldBounds(true).setBounce(.2)
 
         this.cursors = this.input.keyboard.createCursorKeys()
 
@@ -65,6 +105,10 @@ class MemoryScene extends Phaser.Scene {
         } else if (this.cursors.right.isDown) {
             this.player.setVelocityX(speed)
         }
+    }
+    choose()
+    {
+        this.gameObj1.destroy()
     }
 }
 

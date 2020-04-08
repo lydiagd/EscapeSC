@@ -11,8 +11,8 @@ class EndScene extends Phaser.Scene {
     init(data)
     {
         this.player = data.player;
-        this.lScore = data.lScore;
-        this.rScore = data.rScore;
+        // this.lScore = data.lScore;
+        // this.rScore = data.rScore;
     }
 
     preload()

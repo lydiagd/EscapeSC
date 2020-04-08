@@ -11,10 +11,11 @@ import MemoryScene from './scenes/MemoryScene.js';
 class OpeningScreen extends Phaser.Scene { /******** OPENING SCREEN ********/
     constructor() {
         super({ key: 'OpeningScreen' })
+        this.data
     }
 
     init(data) {
-        this.gameData = data.gameData
+        this.data = data.gameData
     }
 
     preload() {
@@ -42,28 +43,28 @@ class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
     init(data)
     {
         this.player = data.player
-        //this.rScore = data.rScore
+        this.data = data.gameData
     }
 
     constructor() {
         super({ key: 'TitleScene' })
         this.player
-        this.lScore
-        this.rScore
+        this.data
     }
+
 
     preload() {
         this.load.image('face', './assets/smileyFace.png')
         this.load.image('icon', './assets/boxBlock.png')
-        this.load.image('pig', './assets/pig.png')
+        this.load.image('right', './assets/right.png')
     }
 
     create() {
         var text = this.add.text(250, 300, 'click to begin game', { font: '16px Courier', fill: '#0f0' })
-        var face = this.add.image(210, 300, 'pig')
+        var face = this.add.image(210, 300, 'right')
         text.setInteractive({ useHandCursor: true })
         face.setInteractive({ useHandCursor: true })
-        face.setScale(0.12)
+        face.setScale(0.03)
         if (this.player == null) {
             text.alpha = CHARACTER_OPAQUE
             face.alpha = CHARACTER_OPAQUE
@@ -90,7 +91,7 @@ class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
     }
 
     clickButton2() {
-        this.scene.start('character')
+        this.scene.start('character', {gameData: data})
     }
 
     enterButtonHoverState() {
@@ -114,7 +115,12 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
     constructor() {
         super({ key: 'character' })
         this.player
+        this.data
         this.arr = [] // push all characters into array and manually set player 
+    }
+    init(data)
+    {
+        this.data = data.gameData
     }
 
     preload() {
@@ -128,12 +134,12 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
 
     create() {
         // CHARACTER OPTION 1
-        this.addNewPlayer(90, 90, 'character')
+        this.addNewPlayer(70, 90, 'character')
 
         // CHARACTER OPTION 2
-        this.addNewPlayer(300, 90, 'skull')
-        this.addNewPlayer(390, 90, 'red-angel')
-        this.addNewPlayer(480, 90, 'indigo-fairy')
+        this.addNewPlayer(200, 90, 'skull')
+        this.addNewPlayer(330, 90, 'red-angel')
+        this.addNewPlayer(460, 90, 'indigo-fairy')
 
         // RETURN TO MAIN SCREEN
         var text = this.add.text(250, 500, 'click to return back to menu screen', { font: '16px Courier', fill: '#ffffff' })
