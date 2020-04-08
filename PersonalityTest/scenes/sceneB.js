@@ -115,7 +115,7 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         }
 
         if (this.player.y < 60) {
-            this.scene.start('sceneC', {player: this.player}, {gameData: data})
+            this.scene.start('sceneC', {player: this.player}, {gameData: this.gameData})
         }
 
         this.player.update()

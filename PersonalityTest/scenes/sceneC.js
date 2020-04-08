@@ -50,7 +50,9 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
         this.spider = this.physics.add.image(140, 100, 'spider').setScale(.4);
 
         // create physics player from the imported player data
-        this.player = this.physics.add.sprite(100, 450, this.player, 1).setScale(.05);
+        // this.player = this.physics.add.sprite(100, 450, this.player, 1).setScale(.05);
+        this.player = this.physics.add.sprite(100, 450, this.player.texture.key, 1).setScale(.05);
+
         this.physics.add.collider(this.player, worldLayer)
         this.player.setCollideWorldBounds(true).setBounce(.2)
 
