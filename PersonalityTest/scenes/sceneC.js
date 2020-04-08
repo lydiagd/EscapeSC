@@ -10,7 +10,11 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
         this.cursors;
         this.curItem;
         this.inv = false;
-        this.itemBool;
+        this.itemBool = false
+        
+        this.gun
+        this.fire
+        this.plush
     }
 
     init(data)
@@ -28,7 +32,7 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
         this.load.image('dun_tiles', '../assets/dungeon_tiles.png');
         this.load.tilemapTiledJSON("dun_map", "../tilesets/castleMap.json");
 
-        this.load.image('shoe', '../assets/shoe.png');
+        this.load.image('fire', '../assets/fire.png');
         this.load.image('gun', '../assets/lazergun.png');
         this.load.image('plush','../assets/plushToy.png')
         this.load.image('cloud', '../assets/cloud.png')
@@ -44,13 +48,15 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
         const worldLayer = map.createStaticLayer("Tile Layer 1", tileset, 0, 0).setScale(3.5)
         worldLayer.setCollisionByProperty({ collides: true })
 
-        this.gun = this.physics.add.image(510, 300, 'gun').setScale(0.007);
-        this.shoe = this.physics.add.image(460, 160, 'shoe').setScale(0.2);
-        this.plush = this.physics.add.image(600, 500, 'plush').setScale(0.1);
-        this.spider = this.physics.add.image(140, 100, 'spider').setScale(.4);
+        this.gun = this.physics.add.image(510, 325, 'gun').setScale(0.02);
+        this.fire = this.physics.add.image(430, 120, 'fire').setScale(0.04);
+        this.plush = this.physics.add.image(600, 510, 'plush').setScale(0.2);
+        this.spider = this.physics.add.image(140, 100, 'spider').setScale(.5);
 
         // create physics player from the imported player data
-        this.player = this.physics.add.sprite(100, 450, this.player, 1).setScale(.05);
+        // this.player = this.physics.add.sprite(100, 450, this.player, 1).setScale(.05);
+        this.player = this.physics.add.sprite(175, 450, this.player.texture.key, 1).setScale(.01);
+
         this.physics.add.collider(this.player, worldLayer)
         this.player.setCollideWorldBounds(true).setBounce(.2)
 
@@ -63,19 +69,13 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        // this.player = this.physics.add.sprite(100, 450, this.player.texture.key,1).setScale(0.12);
-
-        //this.physics.add.overlap(this.player, this.p, this.choose, null, this)
-
         this.physics.add.overlap(this.player, this.gun, this.choose('lazer pistol'), null, this)
-
-        this.physics.add.overlap(this.player, this.plush, this.choose('plush toy'), null, this)
-
+        this.physics.add.overlap(this.player, this.plush, this.choose('FIREEE'), null, this)
+        this.physics.add.overlap(this.player, this.fire, this.choose('lazer pistol'), null, this)
         this.physics.add.overlap(this.player, this.spider, this.kill, null, this)
  
-        // this.player.setCollideWorldBounds(true).setBounce(.2);
 
-        var x = this.add.text(280, 500, 'score lbrain:  ' + gameData.scoreLeft)
+        //var x = this.add.text(280, 500, 'score lbrain:  ' + gameData.scoreLeft)
 
         
     }
