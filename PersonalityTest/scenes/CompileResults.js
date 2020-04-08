@@ -6,10 +6,12 @@ class CompileResults extends Phaser.Scene {
     {
         super({ key: 'CompileResults' });
         this.player
+        this.gameData
     }
     init(data)
     {
         this.player = data.player
+        this.gameData = data.gameData
     }
     preload() { //https://www.patchesoft.com/phaser-3-loading-screen
         //var randomText = this.add.text(30, 32, "I am testing loading in", { fontSize: '16px', fill: '#0f0' });
@@ -51,7 +53,7 @@ class CompileResults extends Phaser.Scene {
 
     complete() {
 		console.log("COMPLETE!");
-		this.scene.start("endScene", {player: this.player});
+		this.scene.start("endScene", {player: this.player}, {lScore: this.gameData.lScore}, {rScore: this.gameData.rScore});
 	}
 }
 

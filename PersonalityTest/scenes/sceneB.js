@@ -1,12 +1,13 @@
 import Character from '../exCode.js'
 
-var CHARACTER_SCALE = 0.13
+var CHARACTER_SCALE = 0.05
 class SceneB extends Phaser.Scene { /******** GAME #2 ********/
     
     constructor ()
     {
         super({ key: 'sceneB' })
         this.player
+        this.gameData
         this.box
         this.cursors
         this.timeText
@@ -17,12 +18,12 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
     init(data)
     {
         this.player = data.player
+        this.gameData = data.gameData
     }
 
     preload ()
     {
         this.load.image('arrow', 'assets/arrow.png')
-        this.load.image('character', './assets/pig.png')
         this.load.image('boxObj', './assets/boxBlock.png')
         this.load.image('tiles', '../assets/tmw_desert_spacing.png')
         this.load.tilemapTiledJSON("map", "../tilesets/desert_map.json")
@@ -70,7 +71,7 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         //ADDED FOR TESTING PURPOSES
         this.input.once('pointerdown', function () {
             this.scene.stop()
-            this.scene.start('MemoryScene', {player: this.player});
+            this.scene.start('MemoryScene', {player: this.player}, {gameData: this.gameData});
         }, this);
 
     }
@@ -113,8 +114,8 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
             this.player.setVelocityY(speed)
         }
 
-        if (this.player.y < 40) {
-            this.scene.start('sceneC', {player: this.player})
+        if (this.player.y < 60) {
+            this.scene.start('sceneC', {player: this.player}, {gameData: data})
         }
 
         this.player.update()

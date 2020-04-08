@@ -6,6 +6,8 @@ import EndScene from './scenes/endScene.js';
 import MemoryScene from './scenes/MemoryScene.js';
 // import endScene from './scenes/endScene.js';
 
+//var CHARACTER_SCALE = 0.05
+
 class OpeningScreen extends Phaser.Scene { /******** OPENING SCREEN ********/
     constructor() {
         super({ key: 'OpeningScreen' })
@@ -31,7 +33,7 @@ class OpeningScreen extends Phaser.Scene { /******** OPENING SCREEN ********/
         text.on('pointerup', this.clickButton, this)
     }
     clickButton() {
-        this.scene.start('LoadScreen')
+        this.scene.start('LoadScreen', {gameData: data})
     }
 }
 
@@ -84,7 +86,7 @@ class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
     }
 
     clickButton() {
-        this.scene.start('sceneB', {player: this.player})
+        this.scene.start('sceneB', {player: this.player}, {gameData: data})
     }
 
     clickButton2() {
@@ -103,7 +105,7 @@ class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
     }
 }
 
-var CHARACTER_SCALE = 0.2;
+var CHARACTER_SCALE = 0.05;
 var CHARACTER_OPAQUE = 0.6;
 class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
     
@@ -118,7 +120,10 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
     preload() {
         this.load.image('character', './assets/pig.png')
         this.load.image('mario', './assets/mario.png')
-        this.load.image('background', './assets/whiteRectangle.png')
+        //this.load.image('background', './assets/whiteRectangle.png')
+        this.load.image('red-angel', './assets/red-angel.png')
+        this.load.image('indigo-fairy', './assets/indigo-fairy.png')
+        this.load.image('skull', './assets/skull.png')
     }
 
     create() {
@@ -126,7 +131,9 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
         this.addNewPlayer(90, 90, 'character')
 
         // CHARACTER OPTION 2
-        this.addNewPlayer(300, 90, 'mario')
+        this.addNewPlayer(300, 90, 'skull')
+        this.addNewPlayer(390, 90, 'red-angel')
+        this.addNewPlayer(480, 90, 'indigo-fairy')
 
         // RETURN TO MAIN SCREEN
         var text = this.add.text(250, 500, 'click to return back to menu screen', { font: '16px Courier', fill: '#ffffff' })
@@ -138,7 +145,7 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
     }
 
     clickButton() {
-        this.scene.start('TitleScene', { player: this.player })
+        this.scene.start('TitleScene', { player: this.player }, {gameData: data})
     }
 
     addNewPlayer(x, y, key) {

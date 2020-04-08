@@ -5,7 +5,8 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
     constructor ()
     {
         super({ key: 'sceneC' });
-        this.player;
+        this.player
+        this.gameData
         this.cursors;
         this.curItem;
         this.inv = false;
@@ -15,6 +16,7 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
     init(data)
     {
         this.player = data.player
+        this.gameData = data.gameData
     }
 
     preload ()
@@ -48,7 +50,7 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
         this.spider = this.physics.add.image(140, 100, 'spider').setScale(.4);
 
         // create physics player from the imported player data
-        this.player = this.physics.add.sprite(100, 450, this.player, 1).setScale(.012);
+        this.player = this.physics.add.sprite(100, 450, this.player, 1).setScale(.05);
         this.physics.add.collider(this.player, worldLayer)
         this.player.setCollideWorldBounds(true).setBounce(.2)
 
@@ -117,10 +119,10 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
         //do scoring
         if (this.itemBool == false)
         {
-            var popup = this.add.text(140, 200, 'Sorry, please create a character before playing the game')
+            var popup = this.add.text(140, 200, 'grab an item to kill the spider!')
         }
         else {
-            this.scene.start('CompileResults', {player: this.player});
+            this.scene.start('CompileResults', {player: this.player}, {gameData: this.gameData});
         }
     }
 }
