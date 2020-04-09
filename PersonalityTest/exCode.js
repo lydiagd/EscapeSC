@@ -34,8 +34,6 @@ class OpeningScreen extends Phaser.Scene { /******** OPENING SCREEN ********/
         text.on('pointerup', this.clickButton, this)
 
         var x = this.add.text(280, 500, 'score lbrain:  ' + this.scoreLeft)
-
-
     }
     clickButton() {
         this.scene.start('LoadScreen', {scoreLeft: this.scoreLeft, scoreRight: this.scoreRight})

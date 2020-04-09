@@ -35,7 +35,7 @@ class LoadScreen extends Phaser.Scene {
 
         //this.load.on('progress', this.updateBar);
 		this.load.on('progress', this.updateBar, {newGraphics:this.newGraphics,loadingText:loadingText}); //progress listener
-		this.load.on('complete', this.complete, {scene:this.scene}); //when done function call
+		this.load.on('complete', this.complete, this); //when done function call
     }
 
     updateBar(percentage) {
