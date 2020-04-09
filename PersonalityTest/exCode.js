@@ -172,8 +172,8 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
     clickButton() {
         if(this.initialTime > 0 && this.player != null)
         {
-            this.dataL += 2*this.initialTime
-            this.dataR += 25/this.initialTime
+            this.dataL += 1.4*this.initialTime
+            this.dataR += 50/this.initialTime
         }
         this.scene.start('TitleScene', { player: this.player, scoreLeft: this.dataL, scoreRight: this.dataR})
     }

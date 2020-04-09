@@ -87,7 +87,7 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
             return
         } else {
             // do something when box is found
-            this.scoreRight += 45
+            this.scoreRight += 50
             console.log("debug: found box: ", this.box)
             this.box.alpha = 1
             this.tweens.add({
