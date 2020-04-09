@@ -70,15 +70,27 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        this.physics.add.overlap(this.player, this.gun, this.choose('lazer pistol', false), null, this)
-        this.physics.add.overlap(this.player, this.plush, this.choose('plush toy?', false), null, this)
-        this.physics.add.overlap(this.player, this.fire, this.choose('FIREEE', false), null, this)
+        this.physics.add.overlap(this.player, this.gun, this.choose_lazer_pistol, null, this)
+        this.physics.add.overlap(this.player, this.plush, this.choose_plush, null, this)
+        this.physics.add.overlap(this.player, this.fire, this.choose_fire, null, this)
         this.physics.add.overlap(this.player, this.spider, this.kill, null, this)
  
 
         //var x = this.add.text(280, 500, 'score lbrain:  ' + gameData.scoreLeft)
 
         
+    }
+
+    choose_lazer_pistol() {
+        this.choose('lazer pistol');
+    }
+
+    choose_fire(){
+        this.choose('FIREEE')
+    }
+
+    choose_plush() {
+        this.choose('plush toy?')
     }
 
     update ()
@@ -105,7 +117,7 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
         // this.fire.update()
         this.gun.update()
 
-        this.physics.add.overlap(this.player, this.gun, this.choose('lazer pistol', true), null, this)
+        //this.physics.add.overlap(this.player, this.gun, this.choose('lazer pistol', true), null, this)
         
 
         // this.physics.add.overlap(this.player, this.plush, this.choose('plush toy'), null, this)
@@ -113,13 +125,11 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
 
     }
 
-    choose(item, boolTrack)
+    choose(item)
     {
-        if(boolTrack == true)
-        {
+        
             this.curItem.setText(item); 
             this.hasGrabbed = true
-        }
     }
 
     kill()

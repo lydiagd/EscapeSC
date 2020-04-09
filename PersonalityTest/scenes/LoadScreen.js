@@ -3,11 +3,13 @@ class LoadScreen extends Phaser.Scene {
     constructor()
     {
         super({ key: 'LoadScreen' });
-        this.data
+        this.scoreLeft
+        this.scoreRight
     }
     init(data)
     {
-        this.data = data.gameData
+        this.scoreLeft = data.scoreLeft
+        this.scoreRight = data.scoreRight
     }
     preload() { //https://www.patchesoft.com/phaser-3-loading-screen
         //var randomText = this.add.text(30, 32, "I am testing loading in", { fontSize: '16px', fill: '#0f0' });
@@ -49,7 +51,7 @@ class LoadScreen extends Phaser.Scene {
 
     complete() {
 		console.log("COMPLETE!");
-		this.scene.start("TitleScene",{player: null}, {gameData: this.data});
+		this.scene.start("TitleScene",{player: null, scoreLeft: this.scoreLeft, scoreRight: this.scoreRight});
 	}
 }
 

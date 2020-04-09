@@ -4,19 +4,19 @@ import LoadScreen from './scenes/LoadScreen.js';
 import CompileResults from './scenes/CompileResults.js';
 import EndScene from './scenes/endScene.js';
 import MemoryScene from './scenes/MemoryScene.js';
-// import endScene from './scenes/endScene.js';
 
 //var CHARACTER_SCALE = 0.05
 
 class OpeningScreen extends Phaser.Scene { /******** OPENING SCREEN ********/
     constructor() {
         super({ key: 'OpeningScreen' })
-        this.data
+        this.scoreLeft = 50.5
+        this.scoreRight = 50.5
     }
 
-    init(data) {
-        this.data = data.gameData
-    }
+    // init(data) {
+    //     // this.data = data.gameData
+    // }
 
     preload() {
 
@@ -33,28 +33,31 @@ class OpeningScreen extends Phaser.Scene { /******** OPENING SCREEN ********/
         text.setInteractive({ useHandCursor: true })
         text.on('pointerup', this.clickButton, this)
 
-        var x = this.add.text(280, 500, 'score lbrain:  ' + data.scoreLeft)
+        var x = this.add.text(280, 500, 'score lbrain:  ' + this.scoreLeft)
 
 
     }
     clickButton() {
-        this.scene.start('LoadScreen', {gameData: this.data})
+        this.scene.start('LoadScreen', {scoreLeft: this.scoreLeft, scoreRight: this.scoreRight})
     }
 }
 
 class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
 
-    init(data)
-    {
-        this.player = data.player
-        this.data = data.gameData
-    }
-
     constructor() {
         super({ key: 'TitleScene' })
         this.player
-        this.data
-        //this.scorel = 50
+        //this.data
+        this.scoreLeft
+        this.scoreRight
+    }
+
+
+    init(data)
+    {
+        this.player = data.player
+        this.scoreLeft = data.scoreLeft
+        this.scoreRight = data.scoreRight
     }
 
 
@@ -90,16 +93,16 @@ class TitleScene extends Phaser.Scene { /******** TITLE SCREEN ********/
         icon.setInteractive({ useHandCursor: true })
         icon.on('pointerup', this.clickButton2, this)
 
-        //var x = this.add.text(280, 500, 'score lbrain:  ' + this.data.scoreLeft)
+        var x = this.add.text(280, 500, 'score lbrain:  ' + this.scoreLeft)
 
     }
 
     clickButton() {
-        this.scene.start('sceneB', {player: this.player, gameData: this.data})
+        this.scene.start('sceneB', {player: this.player, scoreLeft: this.scoreLeft, scoreRight: this.scoreRight})
     }
 
     clickButton2() {
-        this.scene.start('character', {gameData: this.data})
+        this.scene.start('character', {player: this.player, scoreLeft: this.scoreLeft, scoreRight: this.scoreRight})
     }
 
     enterButtonHoverState() {
@@ -121,12 +124,17 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
     constructor() {
         super({ key: 'character' })
         this.player
-        this.data
+        this.dataL
+        this.dataR
         this.arr = [] // push all characters into array and manually set player 
+        this.timeText
+        this.initialTime
     }
     init(data)
     {
-        this.data = data.gameData
+        this.player = data.player
+        this.dataL = data.scoreLeft
+        this.dataR = data.scoreRight
     }
 
     preload() {
@@ -154,10 +162,32 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
         text.on('pointerup', this.clickButton, this)
 
         this.input.manager.enabled = true
+
+
+        this.initialTime = 30
+        this.timeText = this.add.text(525, 550, 'Countdown: '+ this.initialTime, { font: '26px Arial', fill: '#ffffff' })
+        this.timeText.alpha = 0
+        // Each 1000 ms call onEvent
+        this.time.addEvent({ delay: 1000, callback: this.onTimeEvent, callbackScope: this, loop: true })
     }
 
     clickButton() {
-        this.scene.start('TitleScene', { player: this.player, gameData: this.data})
+        if(this.initialTime > 0 && this.player != null)
+        {
+            this.dataL += 1.4*this.initialTime
+            this.dataR += 50/this.initialTime
+        }
+        this.scene.start('TitleScene', { player: this.player, scoreLeft: this.dataL, scoreRight: this.dataR})
+    }
+
+    onTimeEvent ()
+    {
+        this.initialTime -= 1 // One second
+        if (this.initialTime < 0){
+            return
+        }
+        this.timeText.setText('Countdown: ' + this.initialTime)
+        this.timeText.alpha = 0;
     }
 
     addNewPlayer(x, y, key) {
@@ -224,16 +254,16 @@ var config = {
 
 // don't know if we need this class, depends on how complicated the
 // data we want to pass around is
-class gameData {
-    constructor(){
-        // this.playerTest
-        this.scoreLeft = 50
-        this.scoreRight = 50
-    }
-}
+// class gameData {
+//     constructor(){
+//         // this.playerTest
+//         this.scoreLeft = 50
+//         this.scoreRight = 50
+//     }
+// }
 
-var data = new gameData()
+//var data = new gameData()
 var game = new Phaser.Game(config)
 
-game.scene.start(OpeningScreen, {gameData: data})
+game.scene.start(OpeningScreen)
 
