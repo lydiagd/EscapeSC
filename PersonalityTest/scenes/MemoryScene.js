@@ -150,7 +150,7 @@ class MemoryScene extends Phaser.Scene {
                     this.scoreLeft += 30
                     this.add.text(220, 500, 'You\'re right!', { font: '26px Arial', fill: '#ffffff' });
                 } else {
-                    this.scoreRight += 10
+                    this.scoreRight += 20
                     this.add.text(220, 500, 'You\'re wrong!', { font: '26px Arial', fill: '#ffffff' });
                 }
                 this.clickBool = false

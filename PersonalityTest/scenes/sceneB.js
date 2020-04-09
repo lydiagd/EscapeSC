@@ -121,7 +121,7 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         }
 
         if (this.player.y < 80 && this.player.x > 300) {
-            this.scoreLeft += 1.2*(this.initialTime+1)
+            this.scoreLeft += 1.5*((this.initialTime/2)+1)
             this.scene.start('MemoryScene', {player: this.player, scoreLeft: this.scoreLeft, scoreRight: this.scoreRight})
         }
 
