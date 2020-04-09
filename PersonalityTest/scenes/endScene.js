@@ -56,7 +56,7 @@ class EndScene extends Phaser.Scene {
         this.add.text(25, 315, 'and doesn\'t mind choosing "out of the box" paths. This type of person', {font: '12px Courier', fill: '#fff'})
         this.add.text(25, 330, 'might be interested in buffing their dexterity and quick reaction skills',{font: '12px Courier', fill: '#fff'}) 
         this.add.text(25, 345, 'to progress further in their journey of greater things', {font: '12px Courier', fill: '#fff'})
-        this.add.text(25,360, 'Consider visiting litanyofboredom.github.io/Splash and completing these', {font: '12px Courier', fill: '#fff'})
+        this.add.text(25,360, 'Consider visiting litanyofboredom.github.io/ShyGuy and completing these', {font: '12px Courier', fill: '#fff'})
         this.add.text(25, 375, 'challenges to enhace the weaker trait', {font: '12px Courier', fill: '#fff'})
     }
 
@@ -66,7 +66,7 @@ class EndScene extends Phaser.Scene {
         this.add.text(25, 315, 'head on, compete against the timer, and have a competitive nature', {font: '12px Courier', fill: '#fff'})
         this.add.text(25, 330, 'This type of person might be interested in buffing their creativity and' , {font: '12px Courier', fill: '#fff'})
         this.add.text(25, 345, 'logical analysis skills to progress further in their journey of greater things', {font: '12px Courier', fill: '#fff'})
-        this.add.text(25,360, 'Consider visiting litanyofboredom.github.io/ShyGuy and completing these ', {font: '12px Courier', fill: '#fff'})
+        this.add.text(25,360, 'Consider visiting litanyofboredom.github.io/Splash and completing these ', {font: '12px Courier', fill: '#fff'})
         this.add.text(25, 375, 'challenges to enhace the weaker trait', {font: '12px Courier', fill: '#fff'})
     }
 

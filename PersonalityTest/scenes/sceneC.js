@@ -142,13 +142,13 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
             var popup = this.add.text(100, 50, 'grab an item to kill the spider!')
         }
         else {
-            if(this.curItem == 'plush toy?')
+            if(this.curItem == 'lazer gun')
             {
-                this.scoreRight += 15
+                this.scoreLeft += 15
             }
             else
             {
-                this.scoreLeft += 15
+                this.scoreRight += 20
             }
             this.scene.start('CompileResults', {player: this.player, scoreLeft: this.scoreLeft, scoreRight: this.scoreRight});
         }
