@@ -6,12 +6,14 @@ class CompileResults extends Phaser.Scene {
     {
         super({ key: 'CompileResults' });
         this.player
-        this.gameData
+        this.scoreLeft
+        this.scoreRight
     }
     init(data)
     {
         this.player = data.player
-        this.gameData = data.gameData
+        this.scoreLeft = data.scoreLeft
+        this.scoreRight = data.scoreRight
     }
     preload() { //https://www.patchesoft.com/phaser-3-loading-screen
         //var randomText = this.add.text(30, 32, "I am testing loading in", { fontSize: '16px', fill: '#0f0' });
@@ -37,7 +39,7 @@ class CompileResults extends Phaser.Scene {
 
         //this.load.on('progress', this.updateBar);
 		this.load.on('progress', this.updateBar, {newGraphics:this.newGraphics,loadingText:loadingText}); //progress listener
-		this.load.on('complete', this.complete, {scene:this.scene}); //when done function call
+		this.load.on('complete', this.complete, this); //when done function call
     }
 
     updateBar(percentage) {
@@ -53,7 +55,7 @@ class CompileResults extends Phaser.Scene {
 
     complete() {
 		console.log("COMPLETE!");
-		this.scene.start("endScene", {player: this.player})//, {lScore: gameData.lScore}, {rScore: gameData.rScore});
+		this.scene.start("endScene", {player: this.player, scoreLeft: this.scoreLeft, scoreRight: this.scoreRight})//, {lScore: gameData.lScore}, {rScore: gameData.rScore});
 	}
 }
 

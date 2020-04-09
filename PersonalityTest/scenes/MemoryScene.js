@@ -7,7 +7,8 @@ class MemoryScene extends Phaser.Scene {
     {
         super({ key: 'MemoryScene' })
         this.player;
-        this.data
+        this.scoreLeft
+        this.scoreRight
         this.cursors;
 
         this.arr1 = []
@@ -24,7 +25,8 @@ class MemoryScene extends Phaser.Scene {
     init(data)
     {
         this.player = data.player;
-        this.data = data.gameData
+        this.scoreLeft = data.scoreLeft
+        this.scoreRight = data.scoreRight
     }
     preload() {
         this.load.image('bat', './assets/bat.png')
@@ -133,16 +135,22 @@ class MemoryScene extends Phaser.Scene {
     }
 
     clickButton(){
-        this.scene.start('sceneC', {player: this.player}, {gameData: this.gameData})
+        this.scene.start('sceneC', {player: this.player, scoreLeft: this.scoreLeft, scoreRight: this.scoreRight})
     }
 
     choose(answer) {
         if (this.currentRound == 6) {
             if(this.clickBool == true)
             {
+                // if(answer == arr1[2] || answer == arr1[8] || answer == arr1[17])
+                // {
+                //     this.scoreRight += 20
+                // }
                 if (answer == this.answer) {
+                    this.scoreLeft += 30
                     this.add.text(220, 500, 'You\'re right!', { font: '26px Arial', fill: '#ffffff' });
                 } else {
+                    this.scoreRight += 10
                     this.add.text(220, 500, 'You\'re wrong!', { font: '26px Arial', fill: '#ffffff' });
                 }
                 this.clickBool = false

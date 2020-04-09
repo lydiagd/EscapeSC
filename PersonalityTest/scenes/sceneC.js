@@ -6,7 +6,8 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
     {
         super({ key: 'sceneC' });
         this.player
-        this.gameData
+        this.scoreLeft
+        this.scoreRight
         this.cursors;
         this.curItem;
         this.inv = false;
@@ -21,7 +22,8 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
     init(data)
     {
         this.player = data.player
-        this.gameData = data.gameData
+        this.scoreLeft = data.scoreLeft
+        this.scoreRight = data.scoreRight
     }
 
     preload ()
@@ -140,7 +142,15 @@ class SceneC extends Phaser.Scene { /******** GAME #3 ********/
             var popup = this.add.text(100, 50, 'grab an item to kill the spider!')
         }
         else {
-            this.scene.start('CompileResults', {player: this.player}, {gameData: this.gameData});
+            if(this.curItem == 'plush toy?')
+            {
+                this.scoreRight += 15
+            }
+            else
+            {
+                this.scoreLeft += 15
+            }
+            this.scene.start('CompileResults', {player: this.player, scoreLeft: this.scoreLeft, scoreRight: this.scoreRight});
         }
     }
 }

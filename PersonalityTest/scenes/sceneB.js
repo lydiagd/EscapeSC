@@ -7,7 +7,8 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
     {
         super({ key: 'sceneB' })
         this.player
-        this.data
+        this.scoreLeft
+        this.scoreRight
         this.box
         this.cursors
         this.timeText
@@ -18,7 +19,8 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
     init(data)
     {
         this.player = data.player
-        this.data = data.gameData
+        this.scoreLeft = data.scoreLeft
+        this.scoreRight = data.scoreRight
     }
 
     preload ()
@@ -72,10 +74,10 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
         this.time.addEvent({ delay: 1000, callback: this.onTimeEvent, callbackScope: this, loop: true })
 
         //ADDED FOR TESTING PURPOSES
-        this.input.once('pointerdown', function () {
-            this.scene.stop()
-            this.scene.start('MemoryScene', {player: this.player, gameData: this.data});
-        }, this);
+        // this.input.once('pointerdown', function () {
+        //     this.scene.stop()
+        //     this.scene.start('MemoryScene', {player: this.player, gameData: this.data});
+        // }, this);
 
     }
 
@@ -85,6 +87,7 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
             return
         } else {
             // do something when box is found
+            this.scoreRight += 45
             console.log("debug: found box: ", this.box)
             this.box.alpha = 1
             this.tweens.add({
@@ -117,8 +120,9 @@ class SceneB extends Phaser.Scene { /******** GAME #2 ********/
             this.player.setVelocityY(speed)
         }
 
-        if (this.player.y < 100 && this.player.x > 300) {
-            this.scene.start('MemoryScene', {player: this.player}, {gameData: this.data})
+        if (this.player.y < 80 && this.player.x > 300) {
+            this.scoreLeft += 1.2*(this.initialTime+1)
+            this.scene.start('MemoryScene', {player: this.player, scoreLeft: this.scoreLeft, scoreRight: this.scoreRight})
         }
 
         // this.player.update()
