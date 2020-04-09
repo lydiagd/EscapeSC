@@ -1,1 +1,1 @@
-<php include_once("LBRBTest.html"); ?>
+<?php header ('Location: /LBRBTest.html'); ?>
