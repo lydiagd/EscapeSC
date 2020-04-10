@@ -159,7 +159,7 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
         this.input.manager.enabled = true
 
 
-        this.initialTime = 18
+        this.initialTime = 16
         this.timeText = this.add.text(525, 550, 'Countdown: '+ this.initialTime, { font: '26px Arial', fill: '#ffffff' })
         this.timeText.alpha = 0
         // Each 1000 ms call onEvent
@@ -169,8 +169,8 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
     clickButton() {
         if(this.initialTime > 0 && this.player != null)
         {
-            this.dataL += 1.4*this.initialTime
-            this.dataR += 50/this.initialTime
+            this.dataL += 1.1*this.initialTime
+            this.dataR += 60/this.initialTime
         }
         this.scene.start('TitleScene', { player: this.player, scoreLeft: this.dataL, scoreRight: this.dataR})
     }
