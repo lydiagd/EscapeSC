@@ -23,6 +23,7 @@ class OpeningScreen extends Phaser.Scene { /******** OPENING SCREEN ********/
     }
 
     create() {
+        var check = this.add.text(50, 50, "CHECKPOINT: G1", { font: '18px Courier', fill: '#fff' })
         var text = this.add.text(200, 100, 'WELCOME TO THE PERSONALITY CHALLENGE', { font: '18px Courier', fill: 'rgb(68, 136, 170)' })
 
         var n1 = this.add.text(180, 250, 'Want to see if you are eligible for greater things beyond?', { font: '12px Courier', fill: '#0f0' })
