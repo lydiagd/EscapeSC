@@ -23,6 +23,7 @@ class OpeningScreen extends Phaser.Scene { /******** OPENING SCREEN ********/
     }
 
     create() {
+        this.add.text(50, 50, "CHECKPOINT: G1", { font: '18px Courier', fill: '#fff' })
         var text = this.add.text(200, 100, 'WELCOME TO THE PERSONALITY CHALLENGE', { font: '18px Courier', fill: 'rgb(68, 136, 170)' })
 
         var n1 = this.add.text(180, 250, 'Want to see if you are eligible for greater things beyond?', { font: '12px Courier', fill: '#0f0' })
@@ -158,7 +159,7 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
         this.input.manager.enabled = true
 
 
-        this.initialTime = 18
+        this.initialTime = 16
         this.timeText = this.add.text(525, 550, 'Countdown: '+ this.initialTime, { font: '26px Arial', fill: '#ffffff' })
         this.timeText.alpha = 0
         // Each 1000 ms call onEvent
@@ -168,8 +169,8 @@ class Character extends Phaser.Scene /******** CHARACTER SCREEN ********/ {
     clickButton() {
         if(this.initialTime > 0 && this.player != null)
         {
-            this.dataL += 1.1*this.initialTime
-            this.dataR += 70/this.initialTime
+            this.dataL += this.initialTime
+            this.dataR += 60/this.initialTime
         }
         this.scene.start('TitleScene', { player: this.player, scoreLeft: this.dataL, scoreRight: this.dataR})
     }
